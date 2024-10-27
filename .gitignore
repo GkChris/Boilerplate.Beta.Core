@@ -1,0 +1,147 @@
+# .NET Core / .NET 5+ / ASP.NET Core
+bin/
+obj/
+*.log
+*.vspscc
+*.vssscc
+.vscode/
+.vs/
+**/*.user
+**/*.userosscache
+**/*.sln.docstates
+
+# Auto-generated files
+Generated\
+
+# Build Results
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.rptproj.bak
+#appsettings.*.json
+
+# Azure Web Apps settings
+azure*
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Package management
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+# If using the new .NET Core/.NET 5/6 SDK .csproj format, comment out / delete these lines
+*.csproj.user
+*.vcxproj.user
+*.modelproj.user
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mono Auto Generated Files
+mono_crash.*
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows shortcuts
+*.lnk
+
+# Dotnet local environment settings
+*.swp
+appsettings.Local.json
+#appsettings.Development.json
+
+# IIS Express
+/.vs/
+iisexpress/
+
+# Rider IDE files
+.idea/
+
+# JetBrains Rider
+.idea/
+.idea/*
+
+# WebAssembly intermediate outputs
+obj/Debug/*.wasm
+obj/Release/*.wasm
+
+# WebAssembly AOT
+obj/Debug/*.aot
+obj/Release/*.aot
+
+# User-specific config
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Mac files
+.DS_Store
+
+# Visual Studio Code files
+.vscode/*
+
+# SQL Server generated files
+*.mdf
+*.ldf
+
+# Logs
+*.log
+logs/
+logs/*
+
+# Dump files
+*.dmp
+*.stackdump
+*.core
+
+# Database files
+*.mdf
+*.ldf
+
+# NPM / Yarn generated
+node_modules/
+jspm_packages/
+yarn-error.log
+
+# Temporary Files
+tmp/
+temp/
+
+# Visual Studio database
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+
+# Resharper files
+_ReSharper.*
+*.DotSettings.user
+_Resharper.Caches/
+
+# Web and debug artifacts
+debug/
+release/
+dist/
+wwwroot/dist/
+wwwroot/assets/
