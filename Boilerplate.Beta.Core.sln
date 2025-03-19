@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boilerplate.RestAPI.Dotnet", "Boilerplate.RestAPI.Dotnet\Boilerplate.RestAPI.Dotnet.csproj", "{18215CEA-48FC-4B0D-99DD-D031FFF76699}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boilerplate.Beta.Core", "Boilerplate.Beta.Core\Boilerplate.Beta.Core.csproj", "{18215CEA-48FC-4B0D-99DD-D031FFF76699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Boilerplate.RestAPI.Dotnet.Tests", "Boilerplate.RestAPI.Dotnet.Tests\Boilerplate.RestAPI.Dotnet.Tests.csproj", "{DACFF34B-E4A7-4BD0-A9DE-9AA0AACCD395}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Boilerplate.Beta.Core.Tests", "Boilerplate.Beta.Core.Tests\Boilerplate.Beta.Core.Tests.csproj", "{DACFF34B-E4A7-4BD0-A9DE-9AA0AACCD395}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

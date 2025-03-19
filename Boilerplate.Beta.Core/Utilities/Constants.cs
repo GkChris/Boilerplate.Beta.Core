@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Boilerplate.RestAPI.Dotnet.Data.Seeders
+namespace Boilerplate.Beta.Core.Utilities
 {
-    internal class DbInitializer
+    internal class Constants
     {
     }
 }

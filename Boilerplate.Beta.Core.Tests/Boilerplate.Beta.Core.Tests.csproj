@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Boilerplate.RestAPI.Dotnet\Boilerplate.RestAPI.Dotnet.csproj" />
+    <ProjectReference Include="..\Boilerplate.Beta.Core\Boilerplate.Beta.Core.csproj" />
   </ItemGroup>
 
 </Project>

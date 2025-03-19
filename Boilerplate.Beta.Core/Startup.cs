@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Boilerplate.RestAPI.Dotnet.Data;
-using Boilerplate.RestAPI.Dotnet.Extensions;
+using Boilerplate.Beta.Core.Data;
+using Boilerplate.Beta.Core.Extensions;
 using System.Text.Json.Serialization;
 
-namespace Boilerplate.RestAPI.Dotnet
+namespace Boilerplate.Beta.Core
 {
     public class Startup
     {

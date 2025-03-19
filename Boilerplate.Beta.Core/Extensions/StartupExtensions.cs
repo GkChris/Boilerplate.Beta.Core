@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace Boilerplate.RestAPI.Dotnet.Extensions
+namespace Boilerplate.Beta.Core.Extensions
 {
     public static class StartupExtensions
     {

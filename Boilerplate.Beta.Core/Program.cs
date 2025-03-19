@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Boilerplate.RestAPI.Dotnet
+namespace Boilerplate.Beta.Core
 {
     public class Program
     {

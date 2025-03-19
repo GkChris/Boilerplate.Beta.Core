@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Boilerplate.RestAPI.Dotnet.Data
+namespace Boilerplate.Beta.Core.Data
 {
     public class ApplicationDbContext : DbContext
     {

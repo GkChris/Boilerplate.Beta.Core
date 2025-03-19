@@ -115,6 +115,7 @@ logs/*
 *.dmp
 *.stackdump
 *.core
+!Boilerplate.Beta.Core/
 
 # Database files
 *.mdf

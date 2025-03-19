@@ -1,1 +1,1 @@
-# Boilerplate.Beta.Messaging
+# Boilerplate.Beta.Core
