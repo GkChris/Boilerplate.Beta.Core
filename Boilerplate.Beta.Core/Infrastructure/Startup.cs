@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Text.Json.Serialization;
 using Boilerplate.Beta.Core.Infrastructure.Extensions;
+using Boilerplate.Beta.Core.Data;
 
 namespace Boilerplate.Beta.Core.Infrastructure
 {
@@ -22,8 +23,8 @@ namespace Boilerplate.Beta.Core.Infrastructure
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.ConfigureSwagger();
             services.AddControllers().AddJsonOptions(x =>
