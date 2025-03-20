@@ -1,9 +1,9 @@
-﻿using Boilerplate.Beta.Core.Application.Messaging.WebSockets;
+﻿using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets.Abstractions;
 using Microsoft.AspNetCore.Http;
 
 namespace Boilerplate.Beta.Core.Application.Middlewares
 {
-	public class WebSocketMiddleware
+    public class WebSocketMiddleware
 	{
 		private readonly RequestDelegate _next;
 		private readonly IWebSocketManager _webSocketManager;

@@ -1,49 +1,31 @@
-﻿using Boilerplate.Beta.Core.Application.Models.Entities;
-using Boilerplate.Beta.Core.Application.Services;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.Extensions.Logging;
-using System.Text.Json;
 
 namespace Boilerplate.Beta.Core.Application.Handlers
 {
-	public class KafkaMessageHandlers
-	{
-		private readonly IEntityService _entityService;
-		private readonly ILogger<KafkaMessageHandlers> _logger;
+    public class KafkaMessageHandlers
+    {
+        private readonly ILogger<KafkaMessageHandlers> _logger;
+        private readonly IEntityService _entityService;
 
-		public KafkaMessageHandlers(IEntityService entityService, ILogger<KafkaMessageHandlers> logger)
-		{
-			_entityService = entityService;
-			_logger = logger;
-		}
+        public KafkaMessageHandlers(IEntityService entityService, ILogger<KafkaMessageHandlers> logger)
+        {
+            _entityService = entityService;
+            _logger = logger;
+        }
 
-		public async Task HandleUserUpdate(string message)
-		{
-			try
-			{
-				var entity = JsonSerializer.Deserialize<Entity>(message);
-				if (entity == null) throw new Exception("Invalid entity data received");
+        public async Task HandleGenericMessage(string topic, string message)
+        {
+            _logger.LogInformation("Processing message from topic '{Topic}': {Message}", topic, message);
 
-				_logger.LogInformation($"Processing Entity Update: {entity.Property1}");
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError($"Error handling entity update: {ex.Message}");
-			}
-		}
-
-		public async Task HandleOrderEvent(string message)
-		{
-			try
-			{
-				var entity = JsonSerializer.Deserialize<Entity>(message);
-				if (entity == null) throw new Exception("Invalid entity data received");
-
-				_logger.LogInformation($"Processing Entity Event: {entity.Property1}");
-			}
-			catch (Exception ex)
-			{
-				_logger.LogError($"Error handling entity event: {ex.Message}");
-			}
-		}
-	}
+            try
+            {
+                _logger.LogInformation("Successfully processed message from topic '{Topic}'", topic);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error processing message for topic '{Topic}'", topic);
+            }
+        }
+    }
 }

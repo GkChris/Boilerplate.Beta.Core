@@ -1,10 +1,11 @@
 ﻿using Boilerplate.Beta.Core.Application.Models.Entities;
+using Boilerplate.Beta.Core.Application.Repositories.Abstractions;
 using Boilerplate.Beta.Core.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Boilerplate.Beta.Core.Repositories
 {
-	public class EntityRepository : IRepository<Entity>
+    public class EntityRepository : IRepository<Entity>
 	{
 		private readonly ApplicationDbContext _context;
 

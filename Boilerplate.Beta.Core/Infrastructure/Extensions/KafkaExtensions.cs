@@ -1,22 +1,28 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers;
-using Boilerplate.Beta.Core.Application.Messaging.Kafka;
-using Boilerplate.Beta.Core.Infrastructure.Messaging;
+using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka;
+using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
-	public static class KafkaExtensions
+    public static class KafkaExtensions
     {
         public static void AddKafka(this IServiceCollection services, IConfiguration configuration)
         {
             var bootstrapServers = configuration["Kafka:BootstrapServers"];
             var consumerGroup = configuration["Kafka:ConsumerGroup"];
-            var topic = configuration["Kafka:Topic"];
+            var topics = configuration.GetSection("Kafka:Topics").Get<string[]>();
 
-            services.AddSingleton<IKafkaProducer>(new KafkaProducer(bootstrapServers));
-			services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
+            services.AddSingleton<IKafkaProducer>(provider =>
+            {
+                var logger = provider.GetRequiredService<ILogger<KafkaProducer>>();
+                return new KafkaProducer(bootstrapServers, logger);
+            });
+
+            services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
 			services.AddSingleton<KafkaMessageHandlers>();
 
 			services.AddHostedService<KafkaConsumerBackgroundService>();

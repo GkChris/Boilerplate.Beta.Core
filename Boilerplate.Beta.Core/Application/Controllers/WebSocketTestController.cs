@@ -1,10 +1,10 @@
-﻿using Boilerplate.Beta.Core.Infrastructure.Messaging;
+﻿using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
 namespace Boilerplate.Beta.Core.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class WebSocketTestController : ControllerBase
 	{

@@ -1,8 +1,8 @@
-﻿using Boilerplate.Beta.Core.Application.Messaging.WebSockets;
+﻿using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets.Abstractions;
 
 namespace Boilerplate.Beta.Core.Application.Services
 {
-	public class NotificationService
+    public class NotificationService
 	{
 		private readonly IWebSocketManager _webSocketManager;
 

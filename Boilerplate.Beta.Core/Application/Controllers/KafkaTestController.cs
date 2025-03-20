@@ -1,9 +1,9 @@
-﻿using Boilerplate.Beta.Core.Application.Messaging.Kafka;
+﻿using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class KafkaTestController : ControllerBase
 	{
