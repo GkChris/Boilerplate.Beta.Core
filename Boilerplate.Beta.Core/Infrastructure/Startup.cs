@@ -7,6 +7,8 @@ using Microsoft.Extensions.Hosting;
 using System.Text.Json.Serialization;
 using Boilerplate.Beta.Core.Infrastructure.Extensions;
 using Boilerplate.Beta.Core.Data;
+using Boilerplate.Beta.Core.Application.Messaging.WebSockets;
+using Boilerplate.Beta.Core.Application.Middlewares;
 
 namespace Boilerplate.Beta.Core.Infrastructure
 {
@@ -31,7 +33,9 @@ namespace Boilerplate.Beta.Core.Infrastructure
             {
                 x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
-        }
+
+			services.AddSingleton<IWebSocketManager, WebSocketManager>();
+		}
 
         // Configure the HTTP request pipeline here
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -47,8 +51,11 @@ namespace Boilerplate.Beta.Core.Infrastructure
                 app.UseHsts();
             }
 
-            // Common middleware for web applications
-            app.UseHttpsRedirection();
+			// Common middleware for web applications
+			app.UseWebSockets();
+			app.UseMiddleware<WebSocketMiddleware>();
+
+			app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
             app.UseAuthorization();

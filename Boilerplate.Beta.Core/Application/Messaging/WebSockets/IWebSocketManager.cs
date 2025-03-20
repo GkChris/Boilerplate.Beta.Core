@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net.WebSockets;
 
 namespace Boilerplate.Beta.Core.Application.Messaging.WebSockets
 {
-	internal class IWebSocketManager
+	public interface IWebSocketManager
 	{
+		Task AddConnection(WebSocket socket);
+		Task RemoveConnection(WebSocket socket);
+		Task SendMessageToAllClients(string message);
+		Task SendMessageToClient(WebSocket socket, string message);
 	}
+
 }

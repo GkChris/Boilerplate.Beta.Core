@@ -1,20 +1,23 @@
 ﻿using Boilerplate.Beta.Core.Application.Models.Entities;
 
-public class EntityService
+namespace Boilerplate.Beta.Core.Application.Services
 {
-	private readonly IRepository<Entity> _entityRepository;
-
-	public EntityService(IRepository<Entity> entityRepository)
+	public class EntityService
 	{
-		_entityRepository = entityRepository;
-	}
+		private readonly IRepository<Entity> _entityRepository;
 
-	public async Task<IEnumerable<Entity>> GetAllEntitiesAsync()
-	{
-		var entities = await _entityRepository.GetAllAsync();
+		public EntityService(IRepository<Entity> entityRepository)
+		{
+			_entityRepository = entityRepository;
+		}
 
-		var activeEntities = entities.Where(e => e.Property2 == "Example").ToList();
+		public async Task<IEnumerable<Entity>> GetAllEntitiesAsync()
+		{
+			var entities = await _entityRepository.GetAllAsync();
 
-		return activeEntities;
+			var activeEntities = entities.Where(e => e.Property2 == "Example").ToList();
+
+			return activeEntities;
+		}
 	}
 }

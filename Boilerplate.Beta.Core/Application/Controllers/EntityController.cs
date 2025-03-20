@@ -1,52 +1,56 @@
 ﻿using Boilerplate.Beta.Core.Application.Models.Entities;
+using Boilerplate.Beta.Core.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
-public class EntityController : Controller
+namespace Boilerplate.Beta.Core.Application.Controllers
 {
-	private readonly EntityService _entityService;
-	private readonly IRepository<Entity> _entityRepository;
-
-	public EntityController(EntityService entityService, IRepository<Entity> entityRepository)
+	public class EntityController : Controller
 	{
-		_entityService = entityService;
-		_entityRepository = entityRepository;
-	}
+		private readonly EntityService _entityService;
+		private readonly IRepository<Entity> _entityRepository;
 
-	public async Task<IActionResult> GetAllEntities()
-	{
-		try
+		public EntityController(EntityService entityService, IRepository<Entity> entityRepository)
 		{
-			var entities = await _entityService.GetAllEntitiesAsync();
+			_entityService = entityService;
+			_entityRepository = entityRepository;
+		}
 
-			if (entities == null)
+		public async Task<IActionResult> GetAllEntities()
+		{
+			try
 			{
-				return NotFound("No entities found.");
+				var entities = await _entityService.GetAllEntitiesAsync();
+
+				if (entities == null)
+				{
+					return NotFound("No entities found.");
+				}
+
+				return Ok(entities);
 			}
-
-			return Ok(entities); 
-		}
-		catch (Exception ex)
-		{
-			return StatusCode(500, $"Internal server error: {ex.Message}");
-		}
-	}
-
-	public async Task<IActionResult> GetEntity(Guid id)
-	{
-		try
-		{
-			var entity = await _entityRepository.GetByIdAsync(id);
-
-			if (entity == null)
+			catch (Exception ex)
 			{
-				return NotFound("Entity not found.");
+				return StatusCode(500, $"Internal server error: {ex.Message}");
 			}
-
-			return Ok(entity);
 		}
-		catch (Exception ex)
+
+		public async Task<IActionResult> GetEntity(Guid id)
 		{
-			return StatusCode(500, $"Internal server error: {ex.Message}");
+			try
+			{
+				var entity = await _entityRepository.GetByIdAsync(id);
+
+				if (entity == null)
+				{
+					return NotFound("Entity not found.");
+				}
+
+				return Ok(entity);
+			}
+			catch (Exception ex)
+			{
+				return StatusCode(500, $"Internal server error: {ex.Message}");
+			}
 		}
 	}
 }
