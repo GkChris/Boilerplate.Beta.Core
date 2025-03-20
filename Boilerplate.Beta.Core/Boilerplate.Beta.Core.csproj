@@ -23,17 +23,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Core\Mapping\" />
-		<Folder Include="Core\Middlewares\" />
-		<Folder Include="Core\Models\" />
-		<Folder Include="Core\Services\" />
-		<Folder Include="Core\Helpers\" />
-		<Folder Include="Core\Handlers\" />
-		<Folder Include="Exceptions\" />
-		<Folder Include="Core\Enums\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
 			<PrivateAssets>all</PrivateAssets>
@@ -45,10 +34,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Configuration\appsettings.Development.json">
+		<None Update="Infrastructure\appsettings.Development.json">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Configuration\appsettings.json">
+		<None Update="Infrastructure\appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

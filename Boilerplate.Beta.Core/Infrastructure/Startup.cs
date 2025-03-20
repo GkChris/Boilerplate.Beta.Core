@@ -9,6 +9,7 @@ using Boilerplate.Beta.Core.Infrastructure.Extensions;
 using Boilerplate.Beta.Core.Data;
 using Boilerplate.Beta.Core.Application.Messaging.WebSockets;
 using Boilerplate.Beta.Core.Application.Middlewares;
+using Boilerplate.Beta.Core.Infrastructure.Messaging;
 
 namespace Boilerplate.Beta.Core.Infrastructure
 {
@@ -34,7 +35,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
                 x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
-			services.AddSingleton<IWebSocketManager, WebSocketManager>();
+			services.AddWebSocketServices();
 		}
 
         // Configure the HTTP request pipeline here
@@ -52,8 +53,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
             }
 
 			// Common middleware for web applications
-			app.UseWebSockets();
-			app.UseMiddleware<WebSocketMiddleware>();
+			app.UseWebSocketMiddleware();
 
 			app.UseHttpsRedirection();
             app.UseRouting();
