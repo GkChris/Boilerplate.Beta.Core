@@ -1,7 +1,6 @@
 ﻿using Boilerplate.Beta.Core.Application.Messaging.WebSockets;
 using Microsoft.AspNetCore.Http;
 
-
 namespace Boilerplate.Beta.Core.Application.Middlewares
 {
 	public class WebSocketMiddleware

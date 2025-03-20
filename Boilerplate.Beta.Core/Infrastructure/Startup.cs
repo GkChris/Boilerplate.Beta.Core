@@ -1,19 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Text.Json.Serialization;
+using Boilerplate.Beta.Core.Data;
+using Boilerplate.Beta.Core.Infrastructure.Extensions;
+using Boilerplate.Beta.Core.Infrastructure.Messaging;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Text.Json.Serialization;
-using Boilerplate.Beta.Core.Infrastructure.Extensions;
-using Boilerplate.Beta.Core.Data;
-using Boilerplate.Beta.Core.Application.Messaging.WebSockets;
-using Boilerplate.Beta.Core.Application.Middlewares;
-using Boilerplate.Beta.Core.Infrastructure.Messaging;
 
 namespace Boilerplate.Beta.Core.Infrastructure
 {
-    public class Startup
+	public class Startup
     {
         private readonly IConfiguration Configuration;
         private readonly string ApplicationName;

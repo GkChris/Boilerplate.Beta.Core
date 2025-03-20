@@ -1,5 +1,6 @@
 ﻿using Boilerplate.Beta.Core.Application.Models.Entities;
 using Boilerplate.Beta.Core.Application.Services;
+using Boilerplate.Beta.Core.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Application.Controllers

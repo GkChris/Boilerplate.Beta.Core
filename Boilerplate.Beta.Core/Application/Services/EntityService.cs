@@ -1,4 +1,5 @@
 ﻿using Boilerplate.Beta.Core.Application.Models.Entities;
+using Boilerplate.Beta.Core.Repositories;
 
 namespace Boilerplate.Beta.Core.Application.Services
 {

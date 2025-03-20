@@ -9,5 +9,4 @@ namespace Boilerplate.Beta.Core.Application.Messaging.WebSockets
 		Task SendMessageToAllClients(string message);
 		Task SendMessageToClient(WebSocket socket, string message);
 	}
-
 }
