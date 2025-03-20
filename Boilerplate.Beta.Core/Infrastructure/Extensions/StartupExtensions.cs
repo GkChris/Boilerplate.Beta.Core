@@ -24,10 +24,6 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
                     }
                 });
                 c.EnableAnnotations();
-                // Optional: Add XML comments if you have them for better API documentation
-                // var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                // c.IncludeXmlComments(xmlPath);
             });
         }
 
@@ -37,7 +33,7 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = string.Empty; // Sets Swagger UI at the app's root, e.g., https://localhost:<port>/
+                c.RoutePrefix = string.Empty;
             });
         }
     }
