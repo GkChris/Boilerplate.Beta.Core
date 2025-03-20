@@ -1,10 +1,10 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers;
 using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
+using Boilerplate.Beta.Core.Application.Middlewares;
 using Boilerplate.Beta.Core.Application.Services;
 using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets.Abstractions;
-using Boilerplate.Beta.Core.Infrastructure.Middlewares;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
