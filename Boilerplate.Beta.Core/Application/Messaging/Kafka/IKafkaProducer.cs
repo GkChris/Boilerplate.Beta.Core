@@ -1,6 +1,7 @@
 ﻿namespace Boilerplate.Beta.Core.Application.Messaging.Kafka
 {
-	internal class IKafkaProducer
+	public interface IKafkaProducer
 	{
+		Task PublishMessageAsync(string topic, string message);
 	}
 }

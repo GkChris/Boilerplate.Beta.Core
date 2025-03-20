@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Application.Controllers
 {
+	[Route("api/[controller]")]
+	[ApiController]
 	public class EntityController : Controller
 	{
 		private readonly EntityService _entityService;
@@ -16,6 +18,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 			_entityRepository = entityRepository;
 		}
 
+		[HttpGet("get/all")]
 		public async Task<IActionResult> GetAllEntities()
 		{
 			try
@@ -35,6 +38,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 			}
 		}
 
+		[HttpGet("get/{id}")]
 		public async Task<IActionResult> GetEntity(Guid id)
 		{
 			try

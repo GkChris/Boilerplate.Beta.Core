@@ -1,7 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 using Boilerplate.Beta.Core.Data;
 using Boilerplate.Beta.Core.Infrastructure.Extensions;
-using Boilerplate.Beta.Core.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Boilerplate.Beta.Core.Infrastructure
 {
-	public class Startup
+    public class Startup
     {
         private readonly IConfiguration Configuration;
         private readonly string ApplicationName;
@@ -27,13 +26,14 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.ConfigureSwagger();
             services.AddControllers().AddJsonOptions(x =>
             {
                 x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
+            services.AddSwaggerConfiguration();
 			services.AddWebSocketServices();
+			services.AddKafka(Configuration);
 		}
 
         // Configure the HTTP request pipeline here
@@ -42,8 +42,8 @@ namespace Boilerplate.Beta.Core.Infrastructure
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwaggerUI();
-            }
+				app.UseSwaggerUIConfiguration();
+			}
             else
             {
                 app.UseExceptionHandler("/Home/Error");
@@ -52,6 +52,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
 
 			// Common middleware for web applications
 			app.UseWebSocketMiddleware();
+            app.UseKafka();
 
 			app.UseHttpsRedirection();
             app.UseRouting();
@@ -61,7 +62,8 @@ namespace Boilerplate.Beta.Core.Infrastructure
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+				endpoints.MapMessagingEndpoints();
+			});
         }
     }
 }
