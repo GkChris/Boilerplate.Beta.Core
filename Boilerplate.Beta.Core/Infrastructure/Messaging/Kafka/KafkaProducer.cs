@@ -15,7 +15,7 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka
             _logger = logger;
         }
 
-        public async Task PublishMessageAsync(string topic, string message)
+        public async Task ProduceMessageAsync(string topic, string message)
         {
             var config = new ProducerConfig
             {
