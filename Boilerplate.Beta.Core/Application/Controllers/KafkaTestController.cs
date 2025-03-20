@@ -8,12 +8,10 @@ namespace Boilerplate.Beta.Core.Controllers
 	public class KafkaTestController : ControllerBase
 	{
 		private readonly IKafkaProducer _kafkaProducer;
-		private readonly IKafkaConsumer _kafkaConsumer;
 
-		public KafkaTestController(IKafkaProducer kafkaProducer, IKafkaConsumer kafkaConsumer)
+		public KafkaTestController(IKafkaProducer kafkaProducer)
 		{
 			_kafkaProducer = kafkaProducer;
-			_kafkaConsumer = kafkaConsumer;
 		}
 
 		[HttpPost("send-message")]

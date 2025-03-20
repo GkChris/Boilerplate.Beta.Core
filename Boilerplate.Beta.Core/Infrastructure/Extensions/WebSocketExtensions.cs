@@ -1,6 +1,6 @@
 ﻿using Boilerplate.Beta.Core.Application.Messaging.WebSockets;
 using Boilerplate.Beta.Core.Application.Middlewares;
-using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets;
+using Boilerplate.Beta.Core.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;

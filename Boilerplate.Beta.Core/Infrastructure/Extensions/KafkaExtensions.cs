@@ -1,4 +1,5 @@
-﻿using Boilerplate.Beta.Core.Application.Messaging.Kafka;
+﻿using Boilerplate.Beta.Core.Application.Handlers;
+using Boilerplate.Beta.Core.Application.Messaging.Kafka;
 using Boilerplate.Beta.Core.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -6,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
-    public static class KafkaExtensions
+	public static class KafkaExtensions
     {
         public static void AddKafka(this IServiceCollection services, IConfiguration configuration)
         {
@@ -15,9 +16,10 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
             var topic = configuration["Kafka:Topic"];
 
             services.AddSingleton<IKafkaProducer>(new KafkaProducer(bootstrapServers));
-            services.AddSingleton<IKafkaConsumer>(new KafkaConsumer(bootstrapServers, topic, consumerGroup));
+			services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
+			services.AddSingleton<KafkaMessageHandlers>();
 
-            services.AddHostedService<KafkaConsumerBackgroundService>();
+			services.AddHostedService<KafkaConsumerBackgroundService>();
         }
 
 		public static void UseKafka(this IApplicationBuilder app)

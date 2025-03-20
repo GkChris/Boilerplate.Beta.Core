@@ -1,64 +1,84 @@
-﻿using Confluent.Kafka;
+﻿using System.Collections.Concurrent;
+using Confluent.Kafka;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Boilerplate.Beta.Core.Application.Messaging.Kafka
 {
 	public class KafkaConsumer : IKafkaConsumer
 	{
-		private readonly string _bootstrapServers;
-		private readonly string _topic;
-		private readonly string _groupId;
+		private readonly IConfiguration _configuration;
+		private readonly ILogger<KafkaConsumer> _logger;
+		private readonly IConsumer<string, string> _consumer;
+		private readonly ConcurrentDictionary<string, Func<string, Task>> _handlers = new();
 
-		public KafkaConsumer(string bootstrapServers, string topic, string groupId)
-		{
-			_bootstrapServers = bootstrapServers;
-			_topic = topic;
-			_groupId = groupId;
-		}
+		private readonly CancellationTokenSource _cts = new();
 
-		public void StartConsuming()
+		public KafkaConsumer(IConfiguration configuration, ILogger<KafkaConsumer> logger)
 		{
+			_configuration = configuration;
+			_logger = logger;
+
 			var config = new ConsumerConfig
 			{
-				GroupId = _groupId,
-				BootstrapServers = _bootstrapServers,
-				AutoOffsetReset = AutoOffsetReset.Earliest
+				BootstrapServers = _configuration["Kafka:BootstrapServers"] ?? "localhost:9092",
+				GroupId = _configuration["Kafka:GroupId"] ?? "dynamic-group",
+				AutoOffsetReset = AutoOffsetReset.Earliest,
+				EnableAutoCommit = false
 			};
 
-			using (var consumer = new ConsumerBuilder<Ignore, string>(config).Build())
+			_consumer = new ConsumerBuilder<string, string>(config).Build();
+			Task.Run(() => StartConsuming(), _cts.Token);
+		}
+
+		public void Subscribe(string topic, Func<string, Task> messageHandler)
+		{
+			if (_handlers.TryAdd(topic, messageHandler))
 			{
-				consumer.Subscribe(_topic);
+				_consumer.Subscribe(new List<string>(_handlers.Keys));
+				_logger.LogInformation($"Subscribed to topic: {topic}");
+			}
+		}
 
-				CancellationTokenSource cts = new CancellationTokenSource();
-				Console.CancelKeyPress += (_, e) =>
-				{
-					e.Cancel = true;
-					cts.Cancel();
-				};
+		public void Unsubscribe(string topic)
+		{
+			if (_handlers.TryRemove(topic, out _))
+			{
+				_consumer.Subscribe(new List<string>(_handlers.Keys));
+				_logger.LogInformation($"Unsubscribed from topic: {topic}");
+			}
+		}
 
+		private async Task StartConsuming()
+		{
+			_logger.LogInformation("Kafka Consumer started.");
+
+			while (!_cts.Token.IsCancellationRequested)
+			{
 				try
 				{
-					while (!cts.Token.IsCancellationRequested)
+					var consumeResult = _consumer.Consume(_cts.Token);
+					if (consumeResult != null && _handlers.TryGetValue(consumeResult.Topic, out var handler))
 					{
-						try
-						{
-							var consumeResult = consumer.Consume(cts.Token);
-							Console.WriteLine($"Consumed message: {consumeResult.Message.Value}");
-						}
-						catch (ConsumeException e)
-						{
-							Console.WriteLine($"Error occurred: {e.Error.Reason}");
-						}
+						await handler(consumeResult.Message.Value);
+						_consumer.Commit(consumeResult);
 					}
 				}
 				catch (OperationCanceledException)
 				{
-					// Handle cancellation
+					_logger.LogInformation("Kafka consumer stopping...");
 				}
-				finally
+				catch (Exception ex)
 				{
-					consumer.Close();
+					_logger.LogError($"Kafka Consumer Error: {ex.Message}");
 				}
 			}
+		}
+
+		public void Stop()
+		{
+			_cts.Cancel();
+			_consumer.Close();
 		}
 	}
 }

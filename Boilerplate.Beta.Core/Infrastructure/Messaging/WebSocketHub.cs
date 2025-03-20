@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 
-namespace Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets
+namespace Boilerplate.Beta.Core.Infrastructure.Messaging
 {
 	public class WebSocketHub : Hub
 	{

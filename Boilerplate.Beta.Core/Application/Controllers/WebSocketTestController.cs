@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets;
+﻿using Boilerplate.Beta.Core.Infrastructure.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
