@@ -3,7 +3,7 @@ using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets.Abstractions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace Boilerplate.Beta.Core.Infrastructure.Middlewares
+namespace Boilerplate.Beta.Core.Application.Middlewares
 {
     public class WebSocketMiddleware
     {
