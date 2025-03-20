@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Controllers
@@ -7,17 +7,17 @@ namespace Boilerplate.Beta.Core.Controllers
 	[ApiController]
 	public class KafkaTestController : ControllerBase
 	{
-		private readonly IKafkaProducer _kafkaProducer;
+		private readonly IKafkaPublisherService _kafkaPublisherService;
 
-		public KafkaTestController(IKafkaProducer kafkaProducer)
+		public KafkaTestController(IKafkaPublisherService kafkaPublisherService)
 		{
-			_kafkaProducer = kafkaProducer;
+			_kafkaPublisherService = kafkaPublisherService;
 		}
 
 		[HttpPost("send-message")]
 		public async Task<IActionResult> SendMessageAsync([FromBody] string message)
 		{
-			await _kafkaProducer.PublishMessageAsync("topic", message);
+			await _kafkaPublisherService.PublishKafkaMessage("topic", message);
 			return Ok(new { Status = "Message sent to Kafka", Message = message });
 		}
 	}

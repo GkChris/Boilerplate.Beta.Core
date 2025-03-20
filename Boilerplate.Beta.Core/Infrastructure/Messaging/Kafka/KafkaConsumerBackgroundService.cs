@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka
 {
-    public class KafkaConsumerBackgroundService : BackgroundService
+    public class KafkaConsumerBackgroundService : BackgroundService, IKafkaConsumerBackgroundService
     {
         private readonly IKafkaConsumer _kafkaConsumer;
         private readonly KafkaMessageHandlers _messageHandlers;
@@ -26,6 +26,11 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            return StartConsumingMessagesAsync();
+        }
+
+        public Task StartConsumingMessagesAsync()
         {
             _logger.LogInformation("Kafka Consumer Background Service is running.");
 

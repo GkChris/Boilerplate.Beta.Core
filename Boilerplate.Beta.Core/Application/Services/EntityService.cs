@@ -1,9 +1,10 @@
 ﻿using Boilerplate.Beta.Core.Application.Models.Entities;
 using Boilerplate.Beta.Core.Application.Repositories.Abstractions;
+using Boilerplate.Beta.Core.Application.Services.Abstractions;
 
 namespace Boilerplate.Beta.Core.Application.Services
 {
-    public class EntityService
+    public class EntityService : IEntityService
 	{
 		private readonly IRepository<Entity> _entityRepository;
 

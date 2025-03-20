@@ -1,10 +1,11 @@
 ﻿using System.Text.Json;
+using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace Boilerplate.Beta.Core.Application.Services
 {
-    public class KafkaPublisherService
+    public class KafkaPublisherService : IKafkaPublisherService
     {
         private readonly IKafkaProducer _kafkaProducer;
         private readonly ILogger<KafkaPublisherService> _logger;

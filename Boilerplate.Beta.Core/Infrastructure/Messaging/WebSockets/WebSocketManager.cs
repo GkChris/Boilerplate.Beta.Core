@@ -16,75 +16,42 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets
             _logger = logger;
         }
 
-        public async Task AddConnection(WebSocket socket)
+        public async Task AddConnection(string clientId, WebSocket socket)
         {
-            var socketId = Guid.NewGuid().ToString();
-            _connections.TryAdd(socketId, socket);
-
-            _logger.LogInformation("WebSocket connection added. ID: {SocketId}", socketId);
-
-            await ListenToClientMessages(socket, socketId);
+            _connections[clientId] = socket;
+            _logger.LogInformation("WebSocket connected: {ClientId}", clientId);
         }
 
-        public async Task RemoveConnection(WebSocket socket)
+        public async Task RemoveConnection(string clientId)
         {
-            var socketId = _connections.FirstOrDefault(c => c.Value == socket).Key;
-            if (socketId != null)
+            if (_connections.TryRemove(clientId, out var socket))
             {
-                _connections.TryRemove(socketId, out _);
-                _logger.LogInformation("WebSocket connection removed. ID: {SocketId}", socketId);
+                await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Connection closed", CancellationToken.None);
+                _logger.LogInformation("WebSocket disconnected: {ClientId}", clientId);
+            }
+        }
 
-                await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed by the server", CancellationToken.None);
+        public async Task SendMessageToClient(string clientId, string message)
+        {
+            if (_connections.TryGetValue(clientId, out var socket) && socket.State == WebSocketState.Open)
+            {
+                var buffer = Encoding.UTF8.GetBytes(message);
+                await socket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
             }
         }
 
         public async Task SendMessageToAllClients(string message)
         {
             var buffer = Encoding.UTF8.GetBytes(message);
-            var segment = new ArraySegment<byte>(buffer);
-
-            _logger.LogInformation("Broadcasting message to all clients: {Message}", message);
-
-            foreach (var connection in _connections.Values)
+            foreach (var (clientId, socket) in _connections)
             {
-                if (connection.State == WebSocketState.Open)
+                if (socket.State == WebSocketState.Open)
                 {
-                    await connection.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
+                    await socket.SendAsync(buffer, WebSocketMessageType.Text, true, CancellationToken.None);
                 }
             }
         }
 
-        public async Task SendMessageToClient(WebSocket socket, string message)
-        {
-            var buffer = Encoding.UTF8.GetBytes(message);
-            var segment = new ArraySegment<byte>(buffer);
-
-            if (socket.State == WebSocketState.Open)
-            {
-                await socket.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
-                _logger.LogInformation("Sent message to client: {Message}", message);
-            }
-        }
-
-        private async Task ListenToClientMessages(WebSocket socket, string socketId)
-        {
-            var buffer = new byte[1024 * 4];
-
-            while (socket.State == WebSocketState.Open)
-            {
-                var result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-
-                if (result.MessageType == WebSocketMessageType.Close)
-                {
-                    _logger.LogInformation("Client requested to close WebSocket connection. ID: {SocketId}", socketId);
-                    await RemoveConnection(socket);
-                }
-                else
-                {
-                    var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                    _logger.LogInformation("Received message from {SocketId}: {Message}", socketId, message);
-                }
-            }
-        }
+        public IReadOnlyCollection<string> GetConnectedClients() => _connections.Keys.ToList();
     }
 }

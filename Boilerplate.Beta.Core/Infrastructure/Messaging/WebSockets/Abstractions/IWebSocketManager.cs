@@ -4,9 +4,9 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets.Abstractions
 {
     public interface IWebSocketManager
     {
-        Task AddConnection(WebSocket socket);
-        Task RemoveConnection(WebSocket socket);
+        Task AddConnection(string clientId, WebSocket socket);
+        Task RemoveConnection(string clientId);
+        Task SendMessageToClient(string clientId, string message);
         Task SendMessageToAllClients(string message);
-        Task SendMessageToClient(WebSocket socket, string message);
     }
 }

@@ -1,6 +1,5 @@
-﻿using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Boilerplate.Beta.Core.Controllers
 {
@@ -8,17 +7,17 @@ namespace Boilerplate.Beta.Core.Controllers
 	[ApiController]
 	public class WebSocketTestController : ControllerBase
 	{
-		private readonly IHubContext<WebSocketHub> _hubContext;
+		private readonly IWebSocketPublisherService _websocketPublisherService;
 
-		public WebSocketTestController(IHubContext<WebSocketHub> hubContext)
+		public WebSocketTestController(IWebSocketPublisherService websocketPublisherService)
 		{
-			_hubContext = hubContext;
+			_websocketPublisherService = websocketPublisherService;
 		}
 
 		[HttpPost("send-message")]
 		public async Task<IActionResult> SendMessageAsync([FromBody] string message)
 		{
-			await _hubContext.Clients.All.SendAsync("ReceiveMessage", message);
+			await _websocketPublisherService.SendMessageToAllAsync(message);
 			return Ok(new { Status = "Message sent to WebSocket clients", Message = message });
 		}
 

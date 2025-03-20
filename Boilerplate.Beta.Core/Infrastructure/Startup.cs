@@ -62,7 +62,6 @@ namespace Boilerplate.Beta.Core.Infrastructure
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-				endpoints.MapMessagingEndpoints();
 			});
         }
     }

@@ -2,6 +2,6 @@
 {
     public interface IKafkaProducer
     {
-        Task ProduceessageAsync(string topic, string message);
+        Task ProduceMessageAsync(string topic, string message);
     }
 }
