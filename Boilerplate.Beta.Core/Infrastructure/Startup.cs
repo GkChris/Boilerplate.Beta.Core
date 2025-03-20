@@ -4,11 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Boilerplate.Beta.Core.Data;
-using Boilerplate.Beta.Core.Extensions;
 using System.Text.Json.Serialization;
+using Boilerplate.Beta.Core.Infrastructure.Extensions;
 
-namespace Boilerplate.Beta.Core
+namespace Boilerplate.Beta.Core.Infrastructure
 {
     public class Startup
     {
@@ -23,8 +22,8 @@ namespace Boilerplate.Beta.Core
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.ConfigureSwagger();
             services.AddControllers().AddJsonOptions(x =>
@@ -55,7 +54,7 @@ namespace Boilerplate.Beta.Core
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers(); 
+                endpoints.MapControllers();
             });
         }
     }

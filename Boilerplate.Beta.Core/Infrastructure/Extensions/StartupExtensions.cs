@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Boilerplate.Beta.Core.Infrastructure.Extensions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace Boilerplate.Beta.Core.Extensions
+namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
     public static class StartupExtensions
     {

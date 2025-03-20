@@ -8,15 +8,29 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\" />
-		<Folder Include="Data\Migrations\" />
-		<Folder Include="Data\Repositories\Interfaces\" />
-		<Folder Include="Data\Repositories\Concrete\" />
-		<Folder Include="Middlewares\" />
-		<Folder Include="Models\DTOs\" />
-		<Folder Include="Models\Entities\" />
-		<Folder Include="Mapping\" />
-		<Folder Include="Services\" />
+	  <Compile Remove="Mapping\**" />
+	  <Compile Remove="Middlewares\**" />
+	  <Compile Remove="Models\**" />
+	  <Compile Remove="Services\**" />
+	  <EmbeddedResource Remove="Mapping\**" />
+	  <EmbeddedResource Remove="Middlewares\**" />
+	  <EmbeddedResource Remove="Models\**" />
+	  <EmbeddedResource Remove="Services\**" />
+	  <None Remove="Mapping\**" />
+	  <None Remove="Middlewares\**" />
+	  <None Remove="Models\**" />
+	  <None Remove="Services\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Core\Mapping\" />
+		<Folder Include="Core\Middlewares\" />
+		<Folder Include="Core\Models\" />
+		<Folder Include="Core\Services\" />
+		<Folder Include="Core\Helpers\" />
+		<Folder Include="Core\Handlers\" />
+		<Folder Include="Exceptions\" />
+		<Folder Include="Core\Enums\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -31,10 +45,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="Configurations\appsettings.Development.json">
+		<None Update="Configuration\appsettings.Development.json">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
-		<None Update="Configurations\appsettings.json">
+		<None Update="Configuration\appsettings.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>

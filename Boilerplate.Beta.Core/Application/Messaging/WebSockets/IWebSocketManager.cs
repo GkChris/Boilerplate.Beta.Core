@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Boilerplate.Beta.Core.Data.Seeders
+namespace Boilerplate.Beta.Core.Application.Messaging.WebSockets
 {
-    internal class DbInitializer
-    {
-    }
+	internal class IWebSocketManager
+	{
+	}
 }
