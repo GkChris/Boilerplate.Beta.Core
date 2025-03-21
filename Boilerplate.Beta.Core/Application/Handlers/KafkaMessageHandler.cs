@@ -1,17 +1,14 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
-using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace Boilerplate.Beta.Core.Application.Handlers
 {
-    public class KafkaMessageHandlers : IKafkaMessageHandler
+	public class KafkaMessageHandlers : IKafkaMessageHandler
     {
         private readonly ILogger<KafkaMessageHandlers> _logger;
-        private readonly IEntityService _entityService;
 
-        public KafkaMessageHandlers(IEntityService entityService, ILogger<KafkaMessageHandlers> logger)
+        public KafkaMessageHandlers(ILogger<KafkaMessageHandlers> logger)
         {
-            _entityService = entityService;
             _logger = logger;
         }
 

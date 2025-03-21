@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
-    public static class WebSocketExtensions
+    public static class WebSocketExtension
     {
         public static void AddWebSocketServices(this IServiceCollection services)
         {

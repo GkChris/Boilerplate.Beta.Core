@@ -1,4 +1,6 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers;
+using Boilerplate.Beta.Core.Application.Services;
+using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.AspNetCore.Builder;
@@ -8,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
-    public static class KafkaExtensions
+    public static class KafkaExtension
     {
         public static void AddKafka(this IServiceCollection services, IConfiguration configuration)
         {
@@ -24,7 +26,7 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 
             services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
 			services.AddSingleton<KafkaMessageHandlers>();
-
+            services.AddScoped<IKafkaPublisherService, KafkaPublisherService>();
 			services.AddHostedService<KafkaConsumerBackgroundService>();
         }
 

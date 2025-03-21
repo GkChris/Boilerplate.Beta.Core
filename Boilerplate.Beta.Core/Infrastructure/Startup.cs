@@ -31,6 +31,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
                 x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
 
+            services.AddCoreServices();
             services.AddSwaggerConfiguration();
 			services.AddWebSocketServices();
 			services.AddKafka(Configuration);

@@ -20,11 +20,5 @@ namespace Boilerplate.Beta.Core.Controllers
 			await _websocketPublisherService.SendMessageToAllAsync(message);
 			return Ok(new { Status = "Message sent to WebSocket clients", Message = message });
 		}
-
-		[HttpGet("ping")]
-		public IActionResult Ping()
-		{
-			return Ok(new { Status = "WebSocket is connected" });
-		}
 	}
 }

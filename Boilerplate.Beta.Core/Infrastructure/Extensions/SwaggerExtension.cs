@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
-	public static class SwaggerExtensions
+	public static class SwaggerExtension
 	{
 		public static void AddSwaggerConfiguration(this IServiceCollection services)
 		{
