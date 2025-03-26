@@ -22,7 +22,7 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
             });
 
             services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
-            services.AddSingleton<KafkaMessageHandlers>();
+            services.AddScoped<KafkaMessageHandlers>();
             services.AddScoped<IKafkaPublisherService, KafkaPublisherService>();
             services.AddHostedService<KafkaConsumerBackgroundService>();
         }
