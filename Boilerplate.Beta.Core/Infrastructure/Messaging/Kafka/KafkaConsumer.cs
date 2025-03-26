@@ -1,47 +1,56 @@
 ﻿using System.Collections.Concurrent;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Confluent.Kafka;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka
 {
     public class KafkaConsumer : IKafkaConsumer
     {
-        private readonly IConfiguration _configuration;
         private readonly ILogger<KafkaConsumer> _logger;
         private readonly IConsumer<string, string> _consumer;
         private readonly ConcurrentDictionary<string, Func<string, Task>> _handlers = new();
-        private readonly CancellationTokenSource _cts = new();
+        private readonly KafkaSettings _kafkaSettings;
 
-        public KafkaConsumer(IConfiguration configuration, ILogger<KafkaConsumer> logger)
+        public KafkaConsumer(IOptions<KafkaSettings> kafkaSettings, ILogger<KafkaConsumer> logger)
         {
-            _configuration = configuration;
             _logger = logger;
+            _kafkaSettings = kafkaSettings.Value;
 
-            var topics = _configuration.GetSection("Kafka:Topics").Get<string[]>() ?? Array.Empty<string>();
+            if (_kafkaSettings == null)
+            {
+                throw new ArgumentNullException(nameof(kafkaSettings), "Kafka _kafkaSettings cannot be null.");
+            }
+
+            if (string.IsNullOrEmpty(_kafkaSettings.BootstrapServers))
+            {
+                throw new ArgumentException("'BootstrapServers' is required.");
+            }
+
+            if (string.IsNullOrEmpty(_kafkaSettings.GroupId))
+            {
+                throw new ArgumentException("'GroupId' is required.");
+            }
 
             var config = new ConsumerConfig
             {
-                BootstrapServers = _configuration["Kafka:BootstrapServers"],
-                GroupId = _configuration["Kafka:ConsumerGroup"],
+                BootstrapServers = _kafkaSettings.BootstrapServers,
+                GroupId = _kafkaSettings.GroupId,
                 AutoOffsetReset = AutoOffsetReset.Earliest,
                 EnableAutoCommit = false
             };
 
             _consumer = new ConsumerBuilder<string, string>(config).Build();
-            _consumer.Subscribe(topics);
+            _consumer.Subscribe(_kafkaSettings.Topics ?? new List<string>());
 
-            _logger.LogInformation($"Kafka Consumer initialized. Subscribed to topics: {string.Join(", ", topics)}");
-
-            Task.Run(() => StartConsuming(), _cts.Token);
+            _logger.LogInformation($"Kafka Consumer initialized. Subscribed to topics: {string.Join(", ", _kafkaSettings.Topics ?? new List<string>())}");
         }
 
         public void Subscribe(string topic, Func<string, Task> messageHandler)
         {
             if (_handlers.TryAdd(topic, messageHandler))
             {
-                _consumer.Subscribe(new List<string>(_handlers.Keys));
                 _logger.LogInformation($"Subscribed dynamically to topic: {topic}");
             }
         }
@@ -50,43 +59,43 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka
         {
             if (_handlers.TryRemove(topic, out _))
             {
-                _consumer.Subscribe(new List<string>(_handlers.Keys));
                 _logger.LogInformation($"Unsubscribed from topic: {topic}");
             }
         }
 
-        private async Task StartConsuming()
+        public async Task StartConsumingAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("Kafka Consumer started.");
 
-            while (!_cts.Token.IsCancellationRequested)
+            try
             {
-                try
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    var consumeResult = _consumer.Consume(_cts.Token);
-                    if (consumeResult != null && _handlers.TryGetValue(consumeResult.Topic, out var handler))
+                    try
                     {
-                        _logger.LogInformation($"Message received from topic {consumeResult.Topic}: {consumeResult.Message.Value}");
-                        await handler(consumeResult.Message.Value);
-                        _consumer.Commit(consumeResult);
+                        var consumeResult = _consumer.Consume(cancellationToken);
+                        if (consumeResult?.Message != null && _handlers.TryGetValue(consumeResult.Topic, out var handler))
+                        {
+                            _logger.LogInformation($"Message received from topic {consumeResult.Topic}: {consumeResult.Message.Value}");
+                            await handler(consumeResult.Message.Value);
+                            _consumer.Commit(consumeResult);
+                        }
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        _logger.LogInformation("Kafka consumer stopping...");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError($"Kafka Consumer Error: {ex.Message}");
                     }
                 }
-                catch (OperationCanceledException)
-                {
-                    _logger.LogInformation("Kafka consumer stopping...");
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError($"Kafka Consumer Error: {ex.Message}");
-                }
             }
-        }
-
-        public void Stop()
-        {
-            _logger.LogInformation("Kafka Consumer is shutting down.");
-            _cts.Cancel();
-            _consumer.Close();
+            finally
+            {
+                _consumer.Close();
+                _logger.LogInformation("Kafka Consumer closed.");
+            }
         }
     }
 }

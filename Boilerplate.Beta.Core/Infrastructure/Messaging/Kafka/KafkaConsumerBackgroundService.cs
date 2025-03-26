@@ -1,46 +1,40 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka
 {
-    public class KafkaConsumerBackgroundService : BackgroundService, IKafkaConsumerBackgroundService
+    public class KafkaConsumerBackgroundService : BackgroundService
     {
         private readonly IKafkaConsumer _kafkaConsumer;
         private readonly KafkaMessageHandlers _messageHandlers;
         private readonly ILogger<KafkaConsumerBackgroundService> _logger;
-        private readonly IConfiguration _configuration;
+        private readonly KafkaSettings _kafkaSettings;
 
         public KafkaConsumerBackgroundService(
             IKafkaConsumer kafkaConsumer,
             KafkaMessageHandlers messageHandlers,
             ILogger<KafkaConsumerBackgroundService> logger,
-            IConfiguration configuration)
+            IOptions<KafkaSettings> kafkaSettings)
         {
             _kafkaConsumer = kafkaConsumer;
             _messageHandlers = messageHandlers;
             _logger = logger;
-            _configuration = configuration;
+            _kafkaSettings = kafkaSettings.Value;
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            return StartConsumingMessagesAsync();
-        }
-
-        public Task StartConsumingMessagesAsync()
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             _logger.LogInformation("Kafka Consumer Background Service is running.");
 
-            var topics = _configuration.GetSection("Kafka:Topics").Get<string[]>();
-            foreach (var topic in topics)
+            foreach (var topic in _kafkaSettings.Topics ?? new List<string>())
             {
-                _kafkaConsumer.Subscribe(topic, (message) => _messageHandlers.HandleGenericMessage(topic, message));
+                _kafkaConsumer.Subscribe(topic, message => _messageHandlers.HandleGenericMessage(topic, message));
             }
 
-            return Task.CompletedTask;
+            await _kafkaConsumer.StartConsumingAsync(stoppingToken);
         }
     }
 }
