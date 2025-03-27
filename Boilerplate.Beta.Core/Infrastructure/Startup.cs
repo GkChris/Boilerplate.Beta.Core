@@ -23,9 +23,9 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddApiControllers();
             services.AddApplicationServices();
             services.AddSwaggerConfiguration();
-			services.AddWebSocketServices();
-			services.AddKafka(Configuration);
-		}
+            services.AddWebSocketServices();
+            services.AddKafka(Configuration);
+        }
 
         // Configure the HTTP request pipeline here
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,10 +41,10 @@ namespace Boilerplate.Beta.Core.Infrastructure
                 app.UseHsts();
             }
 
-			// Common middleware for web applications
-			app.UseWebSocketMiddleware();
+            // Common middleware for web applications
+            app.UseWebSocketMiddleware();
 
-			app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
             app.UseAuthorization();
@@ -52,7 +52,14 @@ namespace Boilerplate.Beta.Core.Infrastructure
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-			});
+            });
+
+            var infrastructureSettings = Configuration.GetSection("InfrastructureSettings").Get<InfrastructureSettings>() ?? new InfrastructureSettings();
+
+            if (infrastructureSettings.AutoApplyMigrations)
+            {
+                app.ApplicationServices.ApplyMigrations();
+            }
         }
     }
 }

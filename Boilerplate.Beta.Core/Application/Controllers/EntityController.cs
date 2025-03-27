@@ -1,6 +1,6 @@
 ﻿using Boilerplate.Beta.Core.Application.Models.Entities;
 using Boilerplate.Beta.Core.Application.Repositories.Abstractions;
-using Boilerplate.Beta.Core.Application.Services;
+using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Application.Controllers
@@ -9,10 +9,10 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 	[ApiController]
 	public class EntityController : Controller
 	{
-		private readonly EntityService _entityService;
+		private readonly IEntityService _entityService;
 		private readonly IRepository<Entity> _entityRepository;
 
-		public EntityController(EntityService entityService, IRepository<Entity> entityRepository)
+		public EntityController(IEntityService entityService, IRepository<Entity> entityRepository)
 		{
 			_entityService = entityService;
 			_entityRepository = entityRepository;
@@ -57,5 +57,25 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 				return StatusCode(500, $"Internal server error: {ex.Message}");
 			}
 		}
-	}
+
+		[HttpPost("create")]
+        public async Task<IActionResult> CreateEntity([FromBody] Entity payload)
+        {
+            try
+            {
+                if (payload == null)
+                {
+                    return BadRequest("Entity data is required.");
+                }
+
+                var entity = await _entityRepository.AddAsync(payload);
+
+                return Ok(entity);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+    }
 }

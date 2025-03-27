@@ -24,19 +24,22 @@ namespace Boilerplate.Beta.Core.Repositories
 			return await _context.Entity.ToListAsync();
 		}
 
-		public async Task AddAsync(Entity entity)
-		{
-			await _context.Entity.AddAsync(entity);
-			await _context.SaveChangesAsync();
-		}
+        public async Task<Entity> AddAsync(Entity entity)
+        {
+            await _context.Entity.AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
 
-		public async Task UpdateAsync(Entity entity)
-		{
-			_context.Entity.Update(entity);
-			await _context.SaveChangesAsync();
-		}
+        public async Task<Entity> UpdateAsync(Entity entity)
+        {
+            _context.Entity.Update(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
 
-		public async Task DeleteAsync(Guid id)
+
+        public async Task DeleteAsync(Guid id)
 		{
 			var user = await _context.Entity.FindAsync(id);
 			if (user != null)
