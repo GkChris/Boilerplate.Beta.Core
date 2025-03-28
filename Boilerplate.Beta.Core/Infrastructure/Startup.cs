@@ -23,8 +23,8 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddApiControllers();
             services.AddApplicationServices();
             services.AddSwaggerConfiguration();
-            services.AddSignalRServices();
-            //services.AddKafka(Configuration);
+            services.AddSignalRBus();
+            services.AddKafkaBus(Configuration);
         }
 
         // Configure the HTTP request pipeline here
@@ -47,18 +47,18 @@ namespace Boilerplate.Beta.Core.Infrastructure
             app.UseAuthorization();
             app.UseAuthorization();
 
-			app.UseSignalRMiddleware();
+			app.UseSignalREndpoints();
 			app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            //var infrastructureSettings = Configuration.GetSection("InfrastructureSettings").Get<InfrastructureSettings>() ?? new InfrastructureSettings();
+            var infrastructureSettings = Configuration.GetSection("InfrastructureSettings").Get<InfrastructureSettings>() ?? new InfrastructureSettings();
 
-            //if (infrastructureSettings.AutoApplyMigrations)
-            //{
-            //    app.ApplicationServices.ApplyMigrations();
-            //}
+            if (infrastructureSettings.AutoApplyMigrations)
+            {
+                app.ApplicationServices.ApplyMigrations();
+            }
         }
     }
 }

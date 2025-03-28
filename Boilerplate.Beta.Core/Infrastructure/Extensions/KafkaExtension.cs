@@ -11,20 +11,30 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
     public static class KafkaExtension
     {
-        public static void AddKafka(this IServiceCollection services, IConfiguration configuration)
+        public static void AddKafkaBus(this IServiceCollection services, IConfiguration configuration)
         {
-            var bootstrapServers = configuration["Kafka:BootstrapServers"];
+			services.AddKafkaPublisher(configuration);
+			services.AddKafkaConsumer(configuration);
+		}
 
-            services.AddSingleton<IKafkaProducer>(provider =>
-            {
-                var logger = provider.GetRequiredService<ILogger<KafkaProducer>>();
-                return new KafkaProducer(bootstrapServers, logger);
-            });
+		public static void AddKafkaPublisher(this IServiceCollection services, IConfiguration configuration)
+		{
+			var bootstrapServers = configuration["Kafka:BootstrapServers"];
 
-            services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
-            services.AddScoped<KafkaMessageHandlers>();
-            services.AddScoped<IKafkaPublisherService, KafkaPublisherService>();
-            services.AddHostedService<KafkaConsumerBackgroundService>();
-        }
-    }
+			services.AddSingleton<IKafkaProducer>(provider =>
+			{
+				var logger = provider.GetRequiredService<ILogger<KafkaProducer>>();
+				return new KafkaProducer(bootstrapServers, logger);
+			});
+
+			services.AddScoped<IKafkaPublisherService, KafkaPublisherService>();
+		}
+
+		public static void AddKafkaConsumer(this IServiceCollection services, IConfiguration configuration)
+		{
+			services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
+			services.AddScoped<KafkaMessageHandlers>();
+			services.AddHostedService<KafkaConsumerBackgroundService>();
+		}
+	}
 }
