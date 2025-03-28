@@ -63,39 +63,42 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka
             }
         }
 
-        public async Task StartConsumingAsync(CancellationToken cancellationToken)
-        {
-            _logger.LogInformation("Kafka Consumer started.");
+		public async Task StartConsumingAsync(CancellationToken cancellationToken)
+		{
+			_logger.LogInformation("Kafka Consumer started.");
 
-            try
-            {
-                while (!cancellationToken.IsCancellationRequested)
-                {
-                    try
-                    {
-                        var consumeResult = _consumer.Consume(cancellationToken);
-                        if (consumeResult?.Message != null && _handlers.TryGetValue(consumeResult.Topic, out var handler))
-                        {
-                            _logger.LogInformation($"Message received from topic {consumeResult.Topic}: {consumeResult.Message.Value}");
-                            await handler(consumeResult.Message.Value);
-                            _consumer.Commit(consumeResult);
-                        }
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        _logger.LogInformation("Kafka consumer stopping...");
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogError($"Kafka Consumer Error: {ex.Message}");
-                    }
-                }
-            }
-            finally
-            {
-                _consumer.Close();
-                _logger.LogInformation("Kafka Consumer closed.");
-            }
-        }
-    }
+			_ = Task.Run(async () =>
+			{
+				try
+				{
+					while (!cancellationToken.IsCancellationRequested)
+					{
+						try
+						{
+							var consumeResult = _consumer.Consume(cancellationToken);
+							if (consumeResult?.Message != null && _handlers.TryGetValue(consumeResult.Topic, out var handler))
+							{
+								_logger.LogInformation($"Message received from topic {consumeResult.Topic}: {consumeResult.Message.Value}");
+								await handler(consumeResult.Message.Value);
+								_consumer.Commit(consumeResult);
+							}
+						}
+						catch (OperationCanceledException)
+						{
+							_logger.LogInformation("Kafka consumer stopping...");
+						}
+						catch (Exception ex)
+						{
+							_logger.LogError($"Kafka Consumer Error: {ex.Message}");
+						}
+					}
+				}
+				finally
+				{
+					_consumer.Close();
+					_logger.LogInformation("Kafka Consumer closed.");
+				}
+			}, cancellationToken);
+		}
+	}
 }

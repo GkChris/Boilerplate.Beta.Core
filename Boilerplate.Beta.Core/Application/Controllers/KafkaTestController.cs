@@ -17,7 +17,7 @@ namespace Boilerplate.Beta.Core.Controllers
 		[HttpPost("send-message")]
 		public async Task<IActionResult> SendMessageAsync([FromBody] string message)
 		{
-			await _kafkaPublisherService.PublishKafkaMessage("topic", message);
+			await _kafkaPublisherService.PublishKafkaMessage("example-topic-1", message);
 			return Ok(new { Status = "Message sent to Kafka", Message = message });
 		}
 	}
