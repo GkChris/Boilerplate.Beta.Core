@@ -5,11 +5,11 @@ namespace Boilerplate.Beta.Core.Controllers
 {
     [Route("api/[controller]")]
 	[ApiController]
-	public class WebSocketTestController : ControllerBase
+	public class SignalRTestController : ControllerBase
 	{
-		private readonly IWebSocketPublisherService _websocketPublisherService;
+		private readonly ISignalRPublisherService _websocketPublisherService;
 
-		public WebSocketTestController(IWebSocketPublisherService websocketPublisherService)
+		public SignalRTestController(ISignalRPublisherService websocketPublisherService)
 		{
 			_websocketPublisherService = websocketPublisherService;
 		}

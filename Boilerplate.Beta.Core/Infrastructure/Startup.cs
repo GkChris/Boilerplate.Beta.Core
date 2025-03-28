@@ -23,8 +23,8 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddApiControllers();
             services.AddApplicationServices();
             services.AddSwaggerConfiguration();
-            services.AddWebSocketServices();
-            services.AddKafka(Configuration);
+            services.AddSignalRServices();
+            //services.AddKafka(Configuration);
         }
 
         // Configure the HTTP request pipeline here
@@ -42,24 +42,23 @@ namespace Boilerplate.Beta.Core.Infrastructure
             }
 
             // Common middleware for web applications
-            app.UseWebSocketMiddleware();
-
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
+			app.UseSignalRMiddleware();
+			app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            var infrastructureSettings = Configuration.GetSection("InfrastructureSettings").Get<InfrastructureSettings>() ?? new InfrastructureSettings();
+            //var infrastructureSettings = Configuration.GetSection("InfrastructureSettings").Get<InfrastructureSettings>() ?? new InfrastructureSettings();
 
-            if (infrastructureSettings.AutoApplyMigrations)
-            {
-                app.ApplicationServices.ApplyMigrations();
-            }
+            //if (infrastructureSettings.AutoApplyMigrations)
+            //{
+            //    app.ApplicationServices.ApplyMigrations();
+            //}
         }
     }
 }
