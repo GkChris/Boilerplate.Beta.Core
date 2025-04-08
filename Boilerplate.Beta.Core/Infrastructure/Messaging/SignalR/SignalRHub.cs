@@ -1,8 +1,8 @@
-﻿using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets.Abstractions;
+﻿using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR.Abstractions;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
-namespace Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets
+namespace Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR
 {
 	public class ChatHub : Hub, IChatHub
 	{
@@ -16,7 +16,7 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets
 		public async Task SendMessageToClient(string clientId, string message)
 		{
 			_logger.LogInformation("Sending message to {ClientId}: {Message}", clientId, message);
-			await Clients.Client(clientId).SendAsync("ReceiveMessage", message);
+			await Clients.Client(clientId).SendAsync("ReceiveMessage", clientId, message);
 		}
 
 		public async Task SendMessageToAllClients(string message)

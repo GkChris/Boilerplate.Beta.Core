@@ -1,8 +1,8 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers;
 using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
 using Boilerplate.Beta.Core.Application.Services;
+using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR;
-using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,13 +20,12 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 		{
 			services.AddSignalR();
 			services.AddSingleton<ChatHub>();
-			services.AddSingleton<SignalRPublisherService>();
+			services.AddSingleton<ISignalRPublisherService, SignalRPublisherService>();
 		}
 
 		public static void AddSignalRConsumer(this IServiceCollection services)
 		{
 			services.AddSignalR();
-			services.AddSingleton<SignalRMessageHandler>();
 			services.AddSingleton<ISignalRMessageHandler, SignalRMessageHandler>();
 			services.AddHostedService<SignalRClientBackgroundService>();
 		}

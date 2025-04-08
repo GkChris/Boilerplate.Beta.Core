@@ -7,16 +7,18 @@
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5139",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5139"
       }
     },
     "https": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:5139",
+      "applicationUrl": "https://localhost:5139",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:5139"
       }
     },
     "Live": {
@@ -25,7 +27,8 @@
       "launchBrowser": false,
       "applicationUrl": "https://live.yourdomain.com",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Live"
+        "ASPNETCORE_ENVIRONMENT": "Live",
+        "ASPNETCORE_URLS": "https://live.yourdomain.com"
       }
     }
   }

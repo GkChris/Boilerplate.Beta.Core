@@ -1,4 +1,4 @@
-﻿namespace Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets.Abstractions
+﻿namespace Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR.Abstractions
 {
 	public interface IChatHub
 	{

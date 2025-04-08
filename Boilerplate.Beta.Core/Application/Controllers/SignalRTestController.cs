@@ -1,31 +1,38 @@
 ﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
-using Boilerplate.Beta.Core.Infrastructure.Messaging.WebSockets;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Boilerplate.Beta.Core.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class SignalRTestController : ControllerBase
 	{
-		private readonly IHubContext<ChatHub> _hubContext;
+		private readonly ISignalRPublisherService _signalRPublisherService;
 
-		public SignalRTestController(IHubContext<ChatHub> hubContext)
+		public SignalRTestController(ISignalRPublisherService signalRPublisherService)
 		{
-			_hubContext = hubContext;
+			_signalRPublisherService = signalRPublisherService;
 		}
 
 		[HttpPost("send-message")]
-		public async Task<IActionResult> SendMessageAsync([FromBody] MessageRequest request)
+		public async Task<IActionResult> SendMessageAsync([FromBody] SignalRTestRequest request)
 		{
-			await _hubContext.Clients.All.SendAsync("ReceiveMessage", request.Message);
-			return Ok(new { Status = "Message sent", Message = request.Message });
+			if (CanHandleMessage(request.Message))
+			{
+				await _signalRPublisherService.SendMessageToClientAsync(request.ClientId, request.Message);
+			}
+			return Ok();
+		}
+
+		private bool CanHandleMessage(string message)
+		{
+			return message.StartsWith("chat:", StringComparison.OrdinalIgnoreCase);
 		}
 	}
 
-	public class MessageRequest
+	public class SignalRTestRequest
 	{
-		public string Message { get; set; }
+		public string ClientId { get; set; } = default!;
+		public string Message { get; set; } = default!;
 	}
 }

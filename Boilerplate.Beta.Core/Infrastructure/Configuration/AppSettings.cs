@@ -2,7 +2,8 @@
 {
     public class AppSettings
     {
-        public string ApiBaseUrl { get; set; }
+		public string ApplicationUrl { get; set; }
+		public string ApiBaseUrl { get; set; }
         public int PageSize { get; set; }
     }
 }

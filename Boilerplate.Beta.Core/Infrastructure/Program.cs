@@ -15,7 +15,14 @@ namespace Boilerplate.Beta.Core.Infrastructure
                 .ConfigureAppSettings()
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+					var builder = webBuilder.UseStartup<Startup>();
+					builder.UseUrls(GetAppUrl());
+				});
+
+		private static string GetAppUrl()
+		{
+			var url = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+			return url;
+		}
+	}
 }

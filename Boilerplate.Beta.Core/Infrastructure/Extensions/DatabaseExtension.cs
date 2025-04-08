@@ -13,7 +13,7 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         }
 
-        public static void ApplyMigrations(this IServiceProvider serviceProvider)
+        public static void UseAutoMigrations(this IServiceProvider serviceProvider)
         {
             using var scope = serviceProvider.CreateScope();
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

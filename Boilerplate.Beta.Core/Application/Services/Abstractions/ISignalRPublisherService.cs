@@ -2,7 +2,7 @@
 {
     public interface ISignalRPublisherService
     {
-        Task SendMessageToAllAsync(string message);
+        Task SendMessageToAllAsync(string clientId, string message);
         Task SendMessageToClientAsync(string clientId, string message);
     }
 }
