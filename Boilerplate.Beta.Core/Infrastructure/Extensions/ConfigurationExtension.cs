@@ -25,5 +25,6 @@ public static class ConfigurationExtensions
         services.Configure<MetaDataSettings>(configuration.GetSection("MetaData"));
         services.Configure<LoggingSettings>(configuration.GetSection("Logging"));
         services.Configure<ConnectionStrings>(configuration.GetSection("ConnectionStrings"));
-    }
+		services.Configure<InfrastructureSettings>(configuration.GetSection("InfrastructureSettings"));
+	}
 }

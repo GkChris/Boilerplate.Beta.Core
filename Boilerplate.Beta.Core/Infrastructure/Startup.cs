@@ -1,4 +1,5 @@
-﻿using Boilerplate.Beta.Core.Infrastructure.Extensions;
+﻿using Boilerplate.Beta.Core.Application.Middlewares;
+using Boilerplate.Beta.Core.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -46,6 +47,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
             app.UseRouting();
             app.UseAuthorization();
             app.UseAuthorization();
+			app.UseMiddleware<CustomLoggingMiddleware>();
 
             app.UseSignalREndpoints();
             app.UseEndpoints(endpoints =>
