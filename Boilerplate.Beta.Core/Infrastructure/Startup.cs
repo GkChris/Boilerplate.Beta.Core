@@ -24,42 +24,46 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddApiControllers();
             services.AddApplicationServices();
             services.AddSwaggerConfiguration();
-            services.AddSignalRBus();
-            services.AddKafkaBus(Configuration);
-        }
+			services.AddSignalRBus();
+			services.AddKafkaBus(Configuration);
+		}
 
-        // Configure the HTTP request pipeline here
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
+		// Configure the HTTP request pipeline here
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		{
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
 				app.UseSwaggerUIConfiguration();
 			}
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+			else
+			{
+				app.UseExceptionHandler("/Home/Error");
+				app.UseHsts();
+			}
 
-            // Common middleware for web applications
-            app.UseHttpsRedirection();
-            app.UseRouting();
-            app.UseAuthorization();
-            app.UseAuthorization();
+			app.UseHttpsRedirection();
+			app.UseRouting();
+
 			app.UseMiddleware<CustomLoggingMiddleware>();
+			app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            app.UseSignalREndpoints();
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
+			app.UseAuthorization();
+			app.UseSignalREndpoints();
+
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllers();
 			});
 
-            var infrastructureSettings = Configuration.GetSection("InfrastructureSettings").Get<InfrastructureSettings>() ?? new InfrastructureSettings();
-            if (infrastructureSettings.AutoApplyMigrations)
-            {
-                app.ApplicationServices.UseAutoMigrations();
-            }
-        }
-    }
+			var infrastructureSettings = Configuration
+				.GetSection("InfrastructureSettings")
+				.Get<InfrastructureSettings>() ?? new InfrastructureSettings();
+
+			if (infrastructureSettings.AutoApplyMigrations)
+			{
+				app.ApplicationServices.UseAutoMigrations();
+			}
+		}
+	}
 }
