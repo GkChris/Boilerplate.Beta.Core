@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Application.Controllers
 {
-    [Route("api/[controller]")]
+	[Route("api/[controller]")]
 	[ApiController]
 	public class EntityController : Controller
 	{
@@ -77,24 +77,5 @@ namespace Boilerplate.Beta.Core.Application.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
-		[HttpGet("test-success")]
-		public async Task<IActionResult> TestSuccess()
-		{
-			try
-			{
-				return Ok();
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, $"Internal server error: {ex.Message}");
-			}
-		}
-
-		[HttpGet("test-error")]
-		public async Task<IActionResult> TestError()
-		{
-			throw new NotImplementedException();
-		}
 	}
 }

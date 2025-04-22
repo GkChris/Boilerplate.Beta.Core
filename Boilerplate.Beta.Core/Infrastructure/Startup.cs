@@ -45,8 +45,8 @@ namespace Boilerplate.Beta.Core.Infrastructure
 			app.UseHttpsRedirection();
 			app.UseRouting();
 
-			app.UseMiddleware<CustomLoggingMiddleware>();
 			app.UseMiddleware<ErrorHandlingMiddleware>();
+			app.UseMiddleware<CustomLoggingMiddleware>();
 
 			app.UseAuthorization();
 			app.UseSignalREndpoints();

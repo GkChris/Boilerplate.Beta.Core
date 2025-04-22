@@ -4,5 +4,6 @@
     {
         public bool AutoApplyMigrations { get; set; }
 		public bool EnableCustomLoggingMiddleware { get; set; }
+        public bool LogExceptionStackTrace { get; set; }
 	}
 }
