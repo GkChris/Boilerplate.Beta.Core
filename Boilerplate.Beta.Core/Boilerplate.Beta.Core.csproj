@@ -37,6 +37,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<None Update="Infrastructure\appsettings.Local.json">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 		<None Update="Infrastructure\appsettings.Development.json">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>

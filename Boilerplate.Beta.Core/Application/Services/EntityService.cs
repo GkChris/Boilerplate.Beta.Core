@@ -17,9 +17,7 @@ namespace Boilerplate.Beta.Core.Application.Services
 		{
 			var entities = await _entityRepository.GetAllAsync();
 
-			var activeEntities = entities.Where(e => e.Property2 == "Example").ToList();
-
-			return activeEntities;
+			return entities;
 		}
 	}
 }

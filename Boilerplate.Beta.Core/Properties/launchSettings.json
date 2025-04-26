@@ -7,8 +7,10 @@
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5139",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "http://localhost:5139"
+        "ASPNETCORE_ENVIRONMENT": "Local",
+        "ASPNETCORE_URLS": "http://localhost:5139",
+        "ConnectionStrings__DefaultConnection": "Server=localhost;Port=5432;Database=your_database;User Id=user;Password=password;",
+        "Kafka__BootstrapServers": "kafka:9092"
       }
     },
     "https": {
@@ -17,18 +19,10 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:5139",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "ASPNETCORE_URLS": "https://localhost:5139"
-      }
-    },
-    "Live": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": false,
-      "applicationUrl": "https://live.yourdomain.com",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Live",
-        "ASPNETCORE_URLS": "https://live.yourdomain.com"
+        "ASPNETCORE_ENVIRONMENT": "Local",
+        "ASPNETCORE_URLS": "https://localhost:5139",
+        "ConnectionStrings__DefaultConnection": "Server=localhost;Port=5432;Database=your_database;User Id=user;Password=password;",
+        "Kafka__BootstrapServers": "kafka:9092"
       }
     }
   }
