@@ -14,8 +14,8 @@ namespace Boilerplate.Beta.Core.Controllers
 			_signalRPublisherService = signalRPublisherService;
 		}
 
-		[HttpPost("send-message")]
-		public async Task<IActionResult> SendMessageAsync([FromBody] SignalRTestRequest request)
+		[HttpPost("send-message-to-client")]
+		public async Task<IActionResult> SendMessageToClientAsync([FromBody] SignalRTestRequest request)
 		{
 			if (CanHandleMessage(request.Message))
 			{
@@ -24,7 +24,17 @@ namespace Boilerplate.Beta.Core.Controllers
 			return Ok();
 		}
 
-		private bool CanHandleMessage(string message)
+        [HttpPost("send-message-to-all")]
+        public async Task<IActionResult> SendMessageToAllAsync([FromBody] string message)
+        {
+            if (CanHandleMessage(message))
+            {
+                await _signalRPublisherService.SendMessageToAllAsync(message);
+            }
+            return Ok();
+        }
+
+        private bool CanHandleMessage(string message)
 		{
 			return message.StartsWith("chat:", StringComparison.OrdinalIgnoreCase);
 		}

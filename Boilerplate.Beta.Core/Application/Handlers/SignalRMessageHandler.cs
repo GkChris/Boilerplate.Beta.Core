@@ -12,9 +12,9 @@ namespace Boilerplate.Beta.Core.Application.Handlers
 			_logger = logger;
 		}
 
-		public async Task HandleMessageAsync(string clientId, string message)
+		public async Task HandleMessageAsync(string message)
 		{
-			_logger.LogInformation("Handling chat message from {ClientId}: {Message}", clientId, message);
+			_logger.LogInformation("Handling chat message {Message}", message);
 
 			if (CanHandleMessage(message))
 			{

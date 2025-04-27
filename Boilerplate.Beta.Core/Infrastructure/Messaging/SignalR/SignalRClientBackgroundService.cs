@@ -40,10 +40,10 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR
 						await _connection.StartAsync(stoppingToken);
 						_logger.LogInformation("✅ Connected to SignalR!");
 
-						_connection.On<string, string>("ReceiveMessage", async (clientId, message) =>
+						_connection.On<string>("ReceiveMessage", async (message) =>
 						{
-							_logger.LogInformation($"📩 Backend received a message from {clientId}: {message}");
-							await _messageHandler.HandleMessageAsync(clientId, message); 
+							_logger.LogInformation($"📩 Backend received a message: {message}");
+							await _messageHandler.HandleMessageAsync(message); 
 						});
 					}
 				}
