@@ -58,4 +58,4 @@ This boilerplate provides a ready-to-use framework with essential services. You 
 
 ## License
 
-Boilerplate.Beta.Core is licensed under the MIT License. See [LICENSE](https://github.com/GkChris/Boilerplate.Beta.Infrastructure?tab=MIT-1-ov-file) for more details.
+Boilerplate.Beta.Core is licensed under the MIT License. See [LICENSE](https://github.com/GkChris/Boilerplate.Beta.Core?tab=MIT-1-ov-file) for more details.
