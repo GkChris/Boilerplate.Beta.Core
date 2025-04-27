@@ -67,7 +67,7 @@ $RECYCLE.BIN/
 
 # Dotnet local environment settings
 *.swp
-appsettings.Local.json
+# appsettings.Local.json
 #appsettings.Development.json
 
 # IIS Express
