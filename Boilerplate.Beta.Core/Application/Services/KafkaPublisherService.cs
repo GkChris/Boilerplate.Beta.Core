@@ -1,7 +1,9 @@
 ﻿using System.Text.Json;
+using Boilerplate.Beta.Core.Application.Middlewares;
 using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.Extensions.Logging;
+using static Boilerplate.Beta.Core.Application.Shared.Constants.ColorConstants;
 
 namespace Boilerplate.Beta.Core.Application.Services
 {
@@ -22,11 +24,11 @@ namespace Boilerplate.Beta.Core.Application.Services
             {
                 var messageJson = JsonSerializer.Serialize(message);
                 await _kafkaProducer.ProduceMessageAsync(topic, messageJson);
-                _logger.LogInformation($"Published message to topic '{topic}': {messageJson}");
+                _logger.LogInformation($"{AnsiColors.Blue}[Kafka Publisher] - {AnsiColors.Green}Success{AnsiColors.Reset}: Published message to topic '{topic}': {messageJson}");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error publishing message to topic '{topic}': {ex.Message}");
+                _logger.LogError($"{AnsiColors.Blue}[Kafka Publisher] - {AnsiColors.Red}Failure{AnsiColors.Reset}: Error publishing message to topic '{topic}': {ex.Message}");
             }
         }
     }

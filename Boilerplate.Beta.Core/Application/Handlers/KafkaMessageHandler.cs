@@ -1,5 +1,7 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
+using Boilerplate.Beta.Core.Application.Middlewares;
 using Microsoft.Extensions.Logging;
+using static Boilerplate.Beta.Core.Application.Shared.Constants.ColorConstants;
 
 namespace Boilerplate.Beta.Core.Application.Handlers
 {
@@ -18,11 +20,11 @@ namespace Boilerplate.Beta.Core.Application.Handlers
 
             try
             {
-                _logger.LogInformation("Successfully processed message from topic '{Topic}'", topic);
+                _logger.LogInformation($"{AnsiColors.BrightBlue}[Kafka Consumer] - {AnsiColors.Green}Success{AnsiColors.Reset}: Successfully processed message from topic '{topic}'");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing message for topic '{Topic}'", topic);
+                _logger.LogError($"{AnsiColors.BrightBlue}[Kafka Consumer] - {AnsiColors.Red}Failure{AnsiColors.Reset}: Error processing message for topic '{topic}', {ex}");
             }
         }
     }
