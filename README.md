@@ -19,6 +19,7 @@ To get started, you need to clone the following repositories.
 
 ##### 1. Clone the repositories:
 
+
 ```sh
 git clone https://github.com/yourusername/Boilerplate.Beta.Core.git
 git clone https://github.com/yourusername/Boilerplate.Beta.Identity.git
@@ -26,10 +27,11 @@ git clone https://github.com/yourusername/Boilerplate.Beta.Frontend.git
 git clone https://github.com/yourusername/Boilerplate.Beta.Infrastructure.git
 ```
 
-*Boilerplate.Beta.Infrastructure [link](https://github.com/GkChris/Boilerplate.Beta.Infrastructure)*
-*Boilerplate.Beta.Identity [link](https://github.com/GkChris/Boilerplate.Beta.Identity)*
-*Boilerplate.Beta.Frontend [link](https://github.com/GkChris/Boilerplate.Beta.Frontend)*
+- *[Boilerplate.Beta.Infrastructure](https://github.com/GkChris/Boilerplate.Beta.Infrastructure)*
 
+- *[Boilerplate.Beta.Identity](https://github.com/GkChris/Boilerplate.Beta.Identity)*
+
+- *[Boilerplate.Beta.Frontend](https://github.com/GkChris/Boilerplate.Beta.Frontend)*
 
 ##### 2. Navigate to the scripts directory within the Boilerplate.Beta.Infrastructure repository:
 
