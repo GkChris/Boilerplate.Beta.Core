@@ -15,16 +15,21 @@ Boilerplate.Beta.Core is a flexible .NET Core boilerplate designed to accelerate
 
 ## Installation
 
-To get started, you need to clone both Boilerplate.Beta.Core and Boilerplate.Beta.Infrastructure repositories.
+To get started, you need to clone the following repositories.
 
 ##### 1. Clone the repositories:
 
 ```sh
 git clone https://github.com/yourusername/Boilerplate.Beta.Core.git
+git clone https://github.com/yourusername/Boilerplate.Beta.Identity.git
+git clone https://github.com/yourusername/Boilerplate.Beta.Frontend.git
 git clone https://github.com/yourusername/Boilerplate.Beta.Infrastructure.git
 ```
 
 *Boilerplate.Beta.Infrastructure [link](https://github.com/GkChris/Boilerplate.Beta.Infrastructure)*
+*Boilerplate.Beta.Identity [link](https://github.com/GkChris/Boilerplate.Beta.Identity)*
+*Boilerplate.Beta.Frontend [link](https://github.com/GkChris/Boilerplate.Beta.Frontend)*
+
 
 ##### 2. Navigate to the scripts directory within the Boilerplate.Beta.Infrastructure repository:
 
