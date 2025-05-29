@@ -21,61 +21,40 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 		[HttpGet("get/all")]
 		public async Task<IActionResult> GetAllEntities()
 		{
-			try
-			{
-				var entities = await _entityService.GetAllEntitiesAsync();
+            var entities = await _entityService.GetAllEntitiesAsync();
 
-				if (entities == null)
-				{
-					return NotFound("No entities found.");
-				}
+            if (entities == null)
+            {
+                return NotFound("No entities found.");
+            }
 
-				return Ok(entities);
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, $"Internal server error: {ex.Message}");
-			}
-		}
+            return Ok(entities);
+        }
 
 		[HttpGet("get/{id}")]
 		public async Task<IActionResult> GetEntity(Guid id)
 		{
-			try
-			{
-				var entity = await _entityRepository.GetByIdAsync(id);
+            var entity = await _entityRepository.GetByIdAsync(id);
 
-				if (entity == null)
-				{
-					return NotFound("Entity not found.");
-				}
+            if (entity == null)
+            {
+                return NotFound("Entity not found.");
+            }
 
-				return Ok(entity);
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, $"Internal server error: {ex.Message}");
-			}
-		}
+            return Ok(entity);
+        }
 
 		[HttpPost("create")]
         public async Task<IActionResult> CreateEntity([FromBody] Entity payload)
         {
-            try
+            if (payload == null)
             {
-                if (payload == null)
-                {
-                    return BadRequest("Entity data is required.");
-                }
-
-                var entity = await _entityRepository.AddAsync(payload);
-
-                return Ok(entity);
+                return BadRequest("Entity data is required.");
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+
+            var entity = await _entityRepository.AddAsync(payload);
+
+            return Ok(entity);
         }
 	}
 }
