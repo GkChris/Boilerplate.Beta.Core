@@ -5,7 +5,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
-	public class ProtectedController : ControllerBase
+	public class ProtectedTestController : ControllerBase
 	{
 		[HttpGet("public")]
 		public IActionResult Public() => Ok("Anyone can access this");

@@ -5,9 +5,9 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class TestApiController : Controller
+	public class ApiTestController : Controller
 	{
-		public TestApiController()
+		public ApiTestController()
 		{
 		}
 

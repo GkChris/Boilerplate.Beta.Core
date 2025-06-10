@@ -7,12 +7,12 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class EntityController : Controller
+	public class EntityTestController : Controller
 	{
 		private readonly IEntityService _entityService;
 		private readonly IRepository<Entity> _entityRepository;
 
-		public EntityController(IEntityService entityService, IRepository<Entity> entityRepository)
+		public EntityTestController(IEntityService entityService, IRepository<Entity> entityRepository)
 		{
 			_entityService = entityService;
 			_entityRepository = entityRepository;
