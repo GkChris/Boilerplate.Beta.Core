@@ -26,6 +26,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddSwaggerConfiguration();
 			services.AddSignalRBus();
 			services.AddKafkaBus(Configuration);
+			services.AddAuthenticationWithJwtOptions(Configuration);
 		}
 
 		// Configure the HTTP request pipeline here
@@ -48,7 +49,9 @@ namespace Boilerplate.Beta.Core.Infrastructure
 			app.UseMiddleware<ErrorHandlingMiddleware>();
 			app.UseMiddleware<CustomLoggingMiddleware>();
 
+			app.UseAuthentication(); 
 			app.UseAuthorization();
+
 			app.UseSignalREndpoints();
 
 			app.UseEndpoints(endpoints =>
