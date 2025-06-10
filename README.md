@@ -32,25 +32,35 @@ git clone https://github.com/yourusername/Boilerplate.Beta.Infrastructure.git
 
 - *[Boilerplate.Beta.Frontend](https://github.com/GkChris/Boilerplate.Beta.Frontend)*
 
-##### 2. Navigate to the scripts directory within the Boilerplate.Beta.Infrastructure repository:
+##### 2. Navigate to the infrastructure scripts:
 
 ```sh
 cd Boilerplate.Beta.Infrastructure/scripts
 ```
 
-##### 3. Run one of the setup scripts:
+##### 3. Start your environment:
 
-- To run Boilerplate.Beta.Core on the Docker network, execute:
+- Full stack via Docker (Core runs in container):
 
 ```sh
 ./setup.sh full
 ```
 
-- To run only the other components and then run Boilerplate.Beta.Core via Visual Studio, execute:
+- Infrastructure only (Run Core manually via Visual Studio):
 
 ```sh
 ./setup.sh base
 ```
+
+## Usage
+
+Build REST endpoints using standard ASP.NET controllers.
+
+Integrate Kafka producers/consumers via the built-in config.
+
+Use SignalR hubs for real-time push updates.
+
+Identity and auth flows go through FusionAuth (configure your tenant if needed).
 
 ## License
 
