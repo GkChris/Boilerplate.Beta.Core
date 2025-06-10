@@ -1,21 +1,23 @@
 # Boilerplate.Beta.Core
 
-Boilerplate.Beta.Core is a flexible .NET Core boilerplate designed to accelerate backend development. It is preconfigured to work seamlessly in both local and Docker environments and provides foundational components for building scalable, service-oriented applications.
+Boilerplate.Beta.Core is a modular and scalable backend boilerplate built with .NET. It supports REST APIs, Kafka, WebSockets (SignalR), and integrates out of the box with [FusionAuth](https://fusionauth.io) for identity management.
+
+Designed for fast onboarding and reliable local/Docker development, this boilerplate lays the foundation for clean architecture and service-oriented systems.
 
 ## Features
-- **Docker & Local Network Support**: Pre-configured for development in both local and Dockerized environments, making it easy to integrate with your infrastructure setup.
+- **Docker-Ready**: Preconfigured for Docker-based local development.
 
-- **REST API**: Built-in implementation for creating and consuming REST APIs.
+- **FusionAuth Integration**: Seamlessly integrated with FusionAuth for user authentication and authorization.
 
-- **Kafka Integration**: Ready-to-use setup for integrating Kafka, enabling real-time messaging and event-driven architectures.
+- **REST API**: Scaffold APIs with ASP.NET Core controllers and DTOs.
 
-- **WebSockets with SignalR**: A built-in SignalR implementation to enable WebSocket-based communication for real-time updates.
+- **Kafka**: Built-in Kafka producer/consumer setup for event-driven systems.
 
-- **Custom Logger & Error Handler**: Includes a custom logging mechanism and a centralized error handling solution to maintain consistency across services.
+- **WebSockets (SignalR)**: Real-time communication using SignalR.
+
+- **Custom Logger & Error Handler**: Unified logging strategy and global exception filters.
 
 ## Installation
-
-To get started, you need to clone the following repositories.
 
 ##### 1. Clone the repositories:
 
@@ -49,16 +51,6 @@ cd Boilerplate.Beta.Infrastructure/scripts
 ```sh
 ./setup.sh base
 ```
-
-## Usage
-
-This boilerplate provides a ready-to-use framework with essential services. You can customize and extend it according to your project's needs.
-
-**REST API**: Use standard controllers and routes to build your API endpoints.
-
-**Kafka**: Easily set up Kafka producers and consumers for message-driven architectures.
-
-**SignalR**: Leverage SignalR for WebSocket-based real-time communication.
 
 ## License
 
