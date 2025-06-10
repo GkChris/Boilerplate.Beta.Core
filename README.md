@@ -22,14 +22,11 @@ To get started, you need to clone the following repositories.
 
 ```sh
 git clone https://github.com/yourusername/Boilerplate.Beta.Core.git
-git clone https://github.com/yourusername/Boilerplate.Beta.Identity.git
 git clone https://github.com/yourusername/Boilerplate.Beta.Frontend.git
 git clone https://github.com/yourusername/Boilerplate.Beta.Infrastructure.git
 ```
 
 - *[Boilerplate.Beta.Infrastructure](https://github.com/GkChris/Boilerplate.Beta.Infrastructure)*
-
-- *[Boilerplate.Beta.Identity](https://github.com/GkChris/Boilerplate.Beta.Identity)*
 
 - *[Boilerplate.Beta.Frontend](https://github.com/GkChris/Boilerplate.Beta.Frontend)*
 
