@@ -26,11 +26,17 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddSwaggerConfiguration();
 			services.AddSignalRBus();
 			services.AddKafkaBus(Configuration);
-			services.AddAuthenticationWithJwtOptions(Configuration);
-		}
+			services.AddAuth(Configuration);
 
-		// Configure the HTTP request pipeline here
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+            services.AddHttpClient("fusionauth", client =>
+            {
+                var baseUrl = Configuration["FusionAuth:BaseUrl"];
+                client.BaseAddress = new Uri(baseUrl);
+            });
+        }
+
+        // Configure the HTTP request pipeline here
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment() || env.EnvironmentName == "Local")
 			{
