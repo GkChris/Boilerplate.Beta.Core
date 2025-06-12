@@ -10,11 +10,11 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 		public static void AddAuth(this IServiceCollection services, IConfiguration configuration)
 		{
             services.AddAuthentication("Bearer")
-                .AddJwtBearer("Bearer", options =>
+                .AddJwtBearer(options =>
                 {
                     options.Authority = configuration["Jwt:Authority"]; 
-                    options.Audience = configuration["Jwt:Audience"];   
-                    options.RequireHttpsMetadata = false;
+                    options.Audience = configuration["Jwt:Audience"];
+                    options.RequireHttpsMetadata = !bool.TryParse(configuration["Jwt:RequireHttpsMetadata"], out var requireHttps) || requireHttps; // Should be false only in Dev
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -23,20 +23,6 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         RoleClaimType = "roles"
-                    };
-
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnAuthenticationFailed = context =>
-                        {
-                            Console.WriteLine($"[Auth Failed] {context.Exception.Message}");
-                            return Task.CompletedTask;
-                        },
-                        OnTokenValidated = context =>
-                        {
-                            Console.WriteLine($"[Token Validated] {context.SecurityToken}");
-                            return Task.CompletedTask;
-                        }
                     };
                 });
 
