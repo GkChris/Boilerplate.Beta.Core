@@ -9,12 +9,12 @@ namespace Boilerplate.Beta.Core.Application.Controllers
     public class ProtectedTestController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IIdentityService _fusionAuthClient;
+        private readonly IIdentityService _identityClient;
 
-        public ProtectedTestController(IHttpClientFactory httpClientFactory, IIdentityService fusionAuthClient)
+        public ProtectedTestController(IHttpClientFactory httpClientFactory, IIdentityService identityClient)
         {
             _httpClientFactory = httpClientFactory;
-            _fusionAuthClient = fusionAuthClient;
+            _identityClient = identityClient;
         }
 
         [HttpGet("public")]
@@ -39,7 +39,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var token = await _fusionAuthClient.LoginAsync(request.Username, request.Password);
+            var token = await _identityClient.LoginAsync(request.Username, request.Password);
             if (token == null)
             {
                 return Unauthorized("Invalid credentials");

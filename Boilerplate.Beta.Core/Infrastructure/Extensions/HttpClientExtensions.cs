@@ -11,12 +11,12 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
         public static IServiceCollection AddHttpClients(this IServiceCollection services, IConfiguration configuration)
         {
             // FusionAuth
-            var fusionSettings = configuration.GetSection("FusionAuth").Get<FusionAuthSettings>();
-            services.Configure<FusionAuthSettings>(configuration.GetSection("FusionAuth"));
+            var authSettings = configuration.GetSection("AuthSettings").Get<AuthSettings>();
+            services.Configure<AuthSettings>(configuration.GetSection("AuthSettings"));
 
             services.AddHttpClient<IIdentityService, IdentityService>(client =>
             {
-                client.BaseAddress = new Uri(fusionSettings.BaseUrl);
+                client.BaseAddress = new Uri(authSettings.Authority);
             });
 
             // Add more clients here...

@@ -8,9 +8,9 @@ namespace Boilerplate.Beta.Core.Application.Services.Auth
     public class IdentityService : IIdentityService
     {
         private readonly HttpClient _httpClient;
-        private readonly FusionAuthSettings _settings;
+        private readonly AuthSettings _settings;
 
-        public IdentityService(HttpClient httpClient, IOptions<FusionAuthSettings> settings)
+        public IdentityService(HttpClient httpClient, IOptions<AuthSettings> settings)
         {
             _httpClient = httpClient;
             _settings = settings.Value;
@@ -27,12 +27,14 @@ namespace Boilerplate.Beta.Core.Application.Services.Auth
                 new KeyValuePair<string, string>("password", password),
             });
 
-            var response = await _httpClient.PostAsync(_settings.TokenUrl, content);
+            var response = await _httpClient.PostAsync(_settings.TokenEndpoint, content);
             if (!response.IsSuccessStatusCode) return null;
 
             var result = await response.Content.ReadAsStringAsync();
             using var json = JsonDocument.Parse(result);
-            return json.RootElement.GetProperty("access_token").GetString();
+
+            var accessToken = json.RootElement.GetProperty("access_token").GetString();
+            return accessToken;
         }
     }
 }

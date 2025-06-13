@@ -1,29 +1,39 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Boilerplate.Beta.Core.Infrastructure.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
-	public static class AuthExtension
+    public static class AuthExtension
 	{
-		public static void AddAuth(this IServiceCollection services, IConfiguration configuration)
-		{
+        public static void AddAuth(this IServiceCollection services, IConfiguration configuration)
+        {
+            var authSettings = configuration.GetSection("AuthSettings");
+            var authOptions = authSettings.Get<AuthSettings>();
+
+            services.Configure<AuthSettings>(authSettings);
+
             services.AddAuthentication("Bearer")
                 .AddJwtBearer(options =>
                 {
-                    options.Authority = configuration["Jwt:Authority"]; 
-                    options.Audience = configuration["Jwt:Audience"];
-                    options.RequireHttpsMetadata = !bool.TryParse(configuration["Jwt:RequireHttpsMetadata"], out var requireHttps) || requireHttps; // Should be false only in Dev
+                    options.Authority = authOptions.Authority;
+                    options.Audience = authOptions.Audience;
+                    options.RequireHttpsMetadata = authOptions.RequireHttpsMetadata;
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true,
-                        RoleClaimType = "roles"
+                        ValidateIssuer = authOptions.ValidateIssuer,
+                        ValidateAudience = authOptions.ValidateAudience,
+                        ValidateLifetime = authOptions.ValidateLifetime,
+                        ValidateIssuerSigningKey = authOptions.ValidateIssuerSigningKey,
+                        RoleClaimType = authOptions.RoleClaim
                     };
+
+                    if (authOptions.UseTokenIntrospection)
+                    {
+                        // Add introspection logic
+                    }
                 });
 
             services.AddAuthorization();
