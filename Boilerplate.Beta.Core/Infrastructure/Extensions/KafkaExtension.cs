@@ -1,6 +1,6 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers;
-using Boilerplate.Beta.Core.Application.Services;
-using Boilerplate.Beta.Core.Application.Services.Abstractions;
+using Boilerplate.Beta.Core.Application.Services.Abstractions.Kafka;
+using Boilerplate.Beta.Core.Application.Services.Kafka;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.Extensions.Configuration;

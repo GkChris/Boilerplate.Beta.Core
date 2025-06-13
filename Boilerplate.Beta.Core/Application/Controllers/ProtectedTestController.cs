@@ -1,8 +1,6 @@
-﻿using Boilerplate.Beta.Core.Infrastructure.Configuration;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using System.Text.Json;
 
 namespace Boilerplate.Beta.Core.Application.Controllers
 {
@@ -11,24 +9,26 @@ namespace Boilerplate.Beta.Core.Application.Controllers
     public class ProtectedTestController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly FusionAuthSettings _fusionAuthOptions;
+        private readonly IIdentityService _fusionAuthClient;
 
-        public ProtectedTestController(IHttpClientFactory httpClientFactory, IOptions<FusionAuthSettings> fusionAuthOptions)
+        public ProtectedTestController(IHttpClientFactory httpClientFactory, IIdentityService fusionAuthClient)
         {
             _httpClientFactory = httpClientFactory;
-            _fusionAuthOptions = fusionAuthOptions.Value;
+            _fusionAuthClient = fusionAuthClient;
         }
 
         [HttpGet("public")]
-        public IActionResult Public() => Ok("Anyone can access this");
+        public IActionResult Public()
+        {
+            return Ok(new { message = "Anyone can access this endpoint." });
+        }
 
 
         [Authorize]
         [HttpGet("protected")]
         public IActionResult Protected()
         {
-            var token = Request.Headers["Authorization"].ToString();
-            return Ok($"Hello {User.Identity?.Name}, Token received: {token}");
+            return Ok($"Hello {User.Identity?.Name ?? "Unknown user"}");
         }
 
 
@@ -39,25 +39,11 @@ namespace Boilerplate.Beta.Core.Application.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var client = _httpClientFactory.CreateClient("fusionauth");
-
-            var content = new FormUrlEncodedContent(new[]
+            var token = await _fusionAuthClient.LoginAsync(request.Username, request.Password);
+            if (token == null)
             {
-                new KeyValuePair<string, string>("grant_type", "password"),
-                new KeyValuePair<string, string>("client_id", _fusionAuthOptions.ClientId),
-                new KeyValuePair<string, string>("client_secret", _fusionAuthOptions.ClientSecret),
-                new KeyValuePair<string, string>("username", request.Username),
-                new KeyValuePair<string, string>("password", request.Password),
-            });
-
-            var response = await client.PostAsync(_fusionAuthOptions.TokenUrl, content);
-
-            if (!response.IsSuccessStatusCode)
-                return Unauthorized(await response.Content.ReadAsStringAsync());
-
-            var result = await response.Content.ReadAsStringAsync();
-            using var json = JsonDocument.Parse(result);
-            var token = json.RootElement.GetProperty("access_token").GetString();
+                return Unauthorized("Invalid credentials");
+            }
 
             return Ok(new { access_token = token });
         }

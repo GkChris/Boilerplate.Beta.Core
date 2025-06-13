@@ -1,14 +1,14 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers;
 using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
-using Boilerplate.Beta.Core.Application.Services;
-using Boilerplate.Beta.Core.Application.Services.Abstractions;
+using Boilerplate.Beta.Core.Application.Services.Abstractions.SignalR;
+using Boilerplate.Beta.Core.Application.Services.SignalR;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
-	public static class SignalRExtension
+    public static class SignalRExtension
 	{
 		public static void AddSignalRBus(this IServiceCollection services)
 		{

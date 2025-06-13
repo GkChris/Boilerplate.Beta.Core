@@ -1,9 +1,9 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.SignalR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class SignalRTestController : ControllerBase
 	{

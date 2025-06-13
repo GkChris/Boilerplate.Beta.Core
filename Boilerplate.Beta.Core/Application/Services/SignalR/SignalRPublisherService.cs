@@ -1,9 +1,9 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.SignalR;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
-namespace Boilerplate.Beta.Core.Application.Services
+namespace Boilerplate.Beta.Core.Application.Services.SignalR
 {
     public class SignalRPublisherService : ISignalRPublisherService
     {

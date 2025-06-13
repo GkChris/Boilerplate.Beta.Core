@@ -1,10 +1,12 @@
 ﻿using Boilerplate.Beta.Core.Application.Middlewares;
+using Boilerplate.Beta.Core.Infrastructure.Configuration;
 using Boilerplate.Beta.Core.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace Boilerplate.Beta.Core.Infrastructure
 {
@@ -27,18 +29,13 @@ namespace Boilerplate.Beta.Core.Infrastructure
 			services.AddSignalRBus();
 			services.AddKafkaBus(Configuration);
 			services.AddAuth(Configuration);
-
-            services.AddHttpClient("fusionauth", client =>
-            {
-                var baseUrl = Configuration["FusionAuth:BaseUrl"];
-                client.BaseAddress = new Uri(baseUrl);
-            });
+            services.AddHttpClients(Configuration);
         }
 
         // Configure the HTTP request pipeline here
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			if (env.IsDevelopment() || env.EnvironmentName == "Local")
+			if (env.IsDevelopment() || env.IsEnvironment("Local"))
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseSwaggerUIConfiguration();

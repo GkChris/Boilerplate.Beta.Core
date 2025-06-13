@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.Kafka;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Controllers
