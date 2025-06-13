@@ -23,14 +23,12 @@ namespace Boilerplate.Beta.Core.Application.Controllers
             return Ok(new { message = "Anyone can access this endpoint." });
         }
 
-
         [Authorize]
         [HttpGet("protected")]
         public IActionResult Protected()
         {
             return Ok($"Hello {User.Identity?.Name ?? "Unknown user"}");
         }
-
 
         [Authorize(Roles = "admin")]
         [HttpGet("admin")]
