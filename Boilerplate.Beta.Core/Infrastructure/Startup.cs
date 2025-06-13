@@ -1,5 +1,4 @@
 ﻿using Boilerplate.Beta.Core.Application.Middlewares;
-using Boilerplate.Beta.Core.Infrastructure.Configuration;
 using Boilerplate.Beta.Core.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,7 +9,7 @@ using Microsoft.Extensions.Options;
 
 namespace Boilerplate.Beta.Core.Infrastructure
 {
-	public class Startup
+    public class Startup
     {
         private readonly IConfiguration Configuration;
 
@@ -62,11 +61,8 @@ namespace Boilerplate.Beta.Core.Infrastructure
 				endpoints.MapControllers();
 			});
 
-			var infrastructureSettings = Configuration
-				.GetSection("InfrastructureSettings")
-				.Get<InfrastructureSettings>() ?? new InfrastructureSettings();
-
-			if (infrastructureSettings.AutoApplyMigrations)
+            var infraOptions = app.ApplicationServices.GetRequiredService<IOptions<InfrastructureSettings>>();
+            if (infraOptions.Value.AutoApplyMigrations)
 			{
 				app.ApplicationServices.UseAutoMigrations();
 			}
