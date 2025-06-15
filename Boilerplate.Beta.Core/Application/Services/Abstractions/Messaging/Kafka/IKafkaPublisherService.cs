@@ -1,4 +1,4 @@
-﻿namespace Boilerplate.Beta.Core.Application.Services.Abstractions.Kafka
+﻿namespace Boilerplate.Beta.Core.Application.Services.Abstractions.Messaging.Kafka
 {
     public interface IKafkaPublisherService
     {

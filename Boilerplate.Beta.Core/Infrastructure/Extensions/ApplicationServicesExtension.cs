@@ -2,8 +2,6 @@
 using Boilerplate.Beta.Core.Application.Repositories.Abstractions;
 using Boilerplate.Beta.Core.Application.Services;
 using Boilerplate.Beta.Core.Application.Services.Abstractions;
-using Boilerplate.Beta.Core.Application.Services.Abstractions.Auth;
-using Boilerplate.Beta.Core.Application.Services.Auth;
 using Boilerplate.Beta.Core.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,7 +12,6 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
         public static void AddApplicationServices(this IServiceCollection services)
         {
             // Services
-            services.AddScoped<IIdentityService, IdentityService>();
             services.AddScoped<IEntityService, EntityService>();
 
             // Repositories

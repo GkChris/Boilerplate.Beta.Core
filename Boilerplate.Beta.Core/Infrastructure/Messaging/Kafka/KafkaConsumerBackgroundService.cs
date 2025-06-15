@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Handlers;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Messaging.Kafka;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

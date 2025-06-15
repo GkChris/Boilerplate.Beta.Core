@@ -1,10 +1,10 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.Kafka;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.Messaging.Kafka;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using static Boilerplate.Beta.Core.Application.Shared.Constants.ColorConstants;
 
-namespace Boilerplate.Beta.Core.Application.Services.Kafka
+namespace Boilerplate.Beta.Core.Application.Services.Messaging.Kafka
 {
     public class KafkaPublisherService : IKafkaPublisherService
     {

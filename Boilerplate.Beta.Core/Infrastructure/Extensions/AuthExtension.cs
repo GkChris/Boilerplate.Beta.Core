@@ -1,4 +1,6 @@
-﻿using Boilerplate.Beta.Core.Application.Handlers;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Auth;
+using Boilerplate.Beta.Core.Application.Services.Abstractions.Auth;
+using Boilerplate.Beta.Core.Application.Services.Auth;
 using Boilerplate.Beta.Core.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +41,8 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
                     policy.RequireAuthenticatedUser()
                           .AddRequirements(new ActiveUserRequirement()));
             });
+
+            services.AddScoped<IIdentityService, IdentityService>();
             services.AddSingleton<IAuthorizationHandler, ActiveUserHandler>();
             services.AddHttpContextAccessor();
         }

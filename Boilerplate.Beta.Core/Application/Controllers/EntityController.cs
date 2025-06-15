@@ -5,22 +5,22 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Application.Controllers
 {
-	[Route("api/[controller]")]
-	[ApiController]
-	public class EntityTestController : Controller
-	{
-		private readonly IEntityService _entityService;
-		private readonly IRepository<Entity> _entityRepository;
+    [Route("api/[controller]")]
+    [ApiController]
+    public class EntityController : Controller
+    {
+        private readonly IEntityService _entityService;
+        private readonly IRepository<Entity> _entityRepository;
 
-		public EntityTestController(IEntityService entityService, IRepository<Entity> entityRepository)
-		{
-			_entityService = entityService;
-			_entityRepository = entityRepository;
-		}
+        public EntityController(IEntityService entityService, IRepository<Entity> entityRepository)
+        {
+            _entityService = entityService;
+            _entityRepository = entityRepository;
+        }
 
-		[HttpGet("get/all")]
-		public async Task<IActionResult> GetAllEntities()
-		{
+        [HttpGet("get/all")]
+        public async Task<IActionResult> GetAllEntities()
+        {
             var entities = await _entityService.GetAllEntitiesAsync();
 
             if (entities == null)
@@ -31,9 +31,9 @@ namespace Boilerplate.Beta.Core.Application.Controllers
             return Ok(entities);
         }
 
-		[HttpGet("get/{id}")]
-		public async Task<IActionResult> GetEntity(Guid id)
-		{
+        [HttpGet("get/{id}")]
+        public async Task<IActionResult> GetEntity(Guid id)
+        {
             var entity = await _entityRepository.GetByIdAsync(id);
 
             if (entity == null)
@@ -44,7 +44,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
             return Ok(entity);
         }
 
-		[HttpPost("create")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateEntity([FromBody] Entity payload)
         {
             if (payload == null)
@@ -56,5 +56,5 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 
             return Ok(entity);
         }
-	}
+    }
 }

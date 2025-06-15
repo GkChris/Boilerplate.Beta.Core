@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions.Messaging.SignalR;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -6,7 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR
 {
-	public class SignalRClientBackgroundService : BackgroundService
+    public class SignalRClientBackgroundService : BackgroundService
 	{
 		private readonly ILogger<SignalRClientBackgroundService> _logger;
 		private readonly ISignalRMessageHandler _messageHandler;

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 
-namespace Boilerplate.Beta.Core.Application.Handlers
+namespace Boilerplate.Beta.Core.Application.Handlers.Auth
 {
     public class ActiveUserHandler : AuthorizationHandler<ActiveUserRequirement>
     {
@@ -15,35 +15,24 @@ namespace Boilerplate.Beta.Core.Application.Handlers
             _identityService = identityService;
         }
 
-        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, ActiveUserRequirement requirement)
+        protected override async Task HandleRequirementAsync(
+            AuthorizationHandlerContext context,
+            ActiveUserRequirement requirement)
         {
-            var httpContext = _httpContextAccessor.HttpContext;
-            var token = httpContext?.Request.Headers["Authorization"].ToString();
+            var token = _httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString();
 
             if (string.IsNullOrWhiteSpace(token) || !token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
-            {
-                return; // no token, nothing to validate
-            }
+                return;
 
-            var accessToken = token.Substring("Bearer ".Length).Trim();
+            var accessToken = token["Bearer ".Length..].Trim();
 
             if (string.IsNullOrWhiteSpace(accessToken))
-            {
-                return; // malformed token
-            }
+                return;
 
             var isActive = await _identityService.ValidateTokenActiveAsync(accessToken);
 
             if (isActive)
-            {
                 context.Succeed(requirement);
-            }
         }
     }
-
-    public class ActiveUserRequirement : IAuthorizationRequirement
-        {
-            // You can optionally add parameters if needed
-        }
-
 }

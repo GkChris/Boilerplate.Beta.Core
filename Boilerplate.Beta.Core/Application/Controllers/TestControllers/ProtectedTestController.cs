@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Boilerplate.Beta.Core.Application.Controllers
+namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
 {
     [ApiController]
     [Route("api/[controller]")]
