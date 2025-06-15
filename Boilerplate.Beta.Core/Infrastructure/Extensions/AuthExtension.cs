@@ -29,11 +29,6 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
                         ValidateIssuerSigningKey = authOptions.ValidateIssuerSigningKey,
                         RoleClaimType = authOptions.RoleClaim
                     };
-
-                    if (authOptions.UseTokenIntrospection)
-                    {
-                        // Add introspection logic
-                    }
                 });
 
             services.AddAuthorization();

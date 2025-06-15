@@ -1,4 +1,5 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.Auth;
+﻿using Boilerplate.Beta.Core.Application.Attributes;
+using Boilerplate.Beta.Core.Application.Services.Abstractions.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,14 @@ namespace Boilerplate.Beta.Core.Application.Controllers
         [Authorize]
         [HttpGet("protected")]
         public IActionResult Protected()
+        {
+            return Ok($"Hello {User.Identity?.Name ?? "Unknown user"}");
+        }
+
+        [Authorize]
+        [RequiresPostValidation]
+        [HttpGet("protected-require-post-validation")]
+        public IActionResult ProtectedRequirePostValidation()
         {
             return Ok($"Hello {User.Identity?.Name ?? "Unknown user"}");
         }

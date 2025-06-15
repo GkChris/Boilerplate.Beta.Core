@@ -7,13 +7,13 @@ namespace Boilerplate.Beta.Core.Application.Services.Auth
 {
     public class IdentityService : IIdentityService
     {
-        private readonly HttpClient _httpClient;
         private readonly AuthSettings _settings;
+        private readonly HttpClient _httpClient;
 
-        public IdentityService(HttpClient httpClient, IOptions<AuthSettings> settings)
+        public IdentityService(IOptions<AuthSettings> settings, IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
             _settings = settings.Value;
+            _httpClient = httpClientFactory.CreateClient(_settings.ClientName);
         }
 
         public async Task<string?> LoginAsync(string username, string password)
@@ -35,6 +35,30 @@ namespace Boilerplate.Beta.Core.Application.Services.Auth
 
             var accessToken = json.RootElement.GetProperty("access_token").GetString();
             return accessToken;
+        }
+
+        public async Task<bool> ValidateTokenAsync(string token)
+        {
+            //if (string.IsNullOrWhiteSpace(token))
+            //{
+            //    return false;
+            //}
+
+            //var userInfoUrl = new Uri(new Uri(_settings.Authority), _settings.UserInfoEndpoint);
+
+            //using var request = new HttpRequestMessage(HttpMethod.Get, userInfoUrl);
+            //request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            //try
+            //{
+            //    var response = await _httpClient.SendAsync(request);
+            //    return response.IsSuccessStatusCode;
+            //}
+            //catch (HttpRequestException)
+            //{
+            //    return false;
+            //}
+            return true;
         }
     }
 }
