@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.Messaging.Kafka;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers

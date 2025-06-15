@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.Auth;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

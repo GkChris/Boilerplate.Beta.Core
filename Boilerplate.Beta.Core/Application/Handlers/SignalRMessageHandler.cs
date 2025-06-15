@@ -1,7 +1,7 @@
-﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions.Messaging.SignalR;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
 using Microsoft.Extensions.Logging;
 
-namespace Boilerplate.Beta.Core.Application.Handlers.Messaging.SignalR
+namespace Boilerplate.Beta.Core.Application.Handlers
 {
     public class SignalRMessageHandler : ISignalRMessageHandler
     {

@@ -1,6 +1,7 @@
-﻿using Boilerplate.Beta.Core.Application.Handlers.Auth;
-using Boilerplate.Beta.Core.Application.Services.Abstractions.Auth;
-using Boilerplate.Beta.Core.Application.Services.Auth;
+﻿using Boilerplate.Beta.Core.Application.Services;
+using Boilerplate.Beta.Core.Application.Services.Abstractions;
+using Boilerplate.Beta.Core.Infrastructure.Auth;
+using Boilerplate.Beta.Core.Infrastructure.Auth.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -44,7 +45,7 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 
             services.AddScoped<IIdentityService, IdentityService>();
             services.AddSingleton<IAuthorizationHandler, ActiveUserHandler>();
-            services.AddHttpContextAccessor();
+            services.AddScoped<ITokenValidationService, TokenValidationService>();
         }
     }
 }

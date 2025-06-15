@@ -1,7 +1,7 @@
-﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions.Messaging.SignalR;
-using Boilerplate.Beta.Core.Application.Handlers.Messaging.SignalR;
-using Boilerplate.Beta.Core.Application.Services.Abstractions.Messaging.SignalR;
-using Boilerplate.Beta.Core.Application.Services.Messaging.SignalR;
+﻿using Boilerplate.Beta.Core.Application.Handlers;
+using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
+using Boilerplate.Beta.Core.Application.Services;
+using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;

@@ -1,4 +1,4 @@
-﻿namespace Boilerplate.Beta.Core.Application.Services.Abstractions.Messaging.SignalR
+﻿namespace Boilerplate.Beta.Core.Application.Services.Abstractions
 {
     public interface ISignalRPublisherService
     {

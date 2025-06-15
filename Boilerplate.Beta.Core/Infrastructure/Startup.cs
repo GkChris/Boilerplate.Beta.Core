@@ -29,6 +29,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
 			services.AddKafkaBus(Configuration);
 			services.AddAuth(Configuration);
             services.AddHttpClients(Configuration);
+            services.AddHttpContextAccessor();
         }
 
         // Configure the HTTP request pipeline here

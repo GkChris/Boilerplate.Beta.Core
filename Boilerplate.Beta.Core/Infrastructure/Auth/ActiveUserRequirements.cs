@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 
-namespace Boilerplate.Beta.Core.Application.Handlers.Auth
+namespace Boilerplate.Beta.Core.Infrastructure.Auth
 {
     public class ActiveUserRequirement : IAuthorizationRequirement
     {

@@ -1,4 +1,4 @@
-﻿namespace Boilerplate.Beta.Core.Application.Handlers.Abstractions.Messaging.Kafka
+﻿namespace Boilerplate.Beta.Core.Application.Handlers.Abstractions
 {
     public interface IKafkaMessageHandler
     {

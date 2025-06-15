@@ -1,9 +1,9 @@
-﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions.Messaging.Kafka;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
 using Boilerplate.Beta.Core.Application.Middlewares;
 using Microsoft.Extensions.Logging;
 using static Boilerplate.Beta.Core.Application.Shared.Constants.ColorConstants;
 
-namespace Boilerplate.Beta.Core.Application.Handlers.Messaging.Kafka
+namespace Boilerplate.Beta.Core.Application.Handlers
 {
     public class KafkaMessageHandlers : IKafkaMessageHandler
     {

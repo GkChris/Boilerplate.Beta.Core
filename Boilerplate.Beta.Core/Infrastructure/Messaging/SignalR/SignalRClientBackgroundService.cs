@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions.Messaging.SignalR;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

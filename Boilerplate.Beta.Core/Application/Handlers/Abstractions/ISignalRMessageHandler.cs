@@ -1,4 +1,4 @@
-﻿namespace Boilerplate.Beta.Core.Application.Handlers.Abstractions.Messaging.SignalR
+﻿namespace Boilerplate.Beta.Core.Application.Handlers.Abstractions
 {
     public interface ISignalRMessageHandler
     {
