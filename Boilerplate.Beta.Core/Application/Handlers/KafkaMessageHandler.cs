@@ -1,5 +1,4 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
-using Boilerplate.Beta.Core.Application.Middlewares;
 using Microsoft.Extensions.Logging;
 using static Boilerplate.Beta.Core.Application.Shared.Constants.ColorConstants;
 
