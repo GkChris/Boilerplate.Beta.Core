@@ -7,6 +7,7 @@
         public string Audience { get; set; }               
         public string TokenEndpoint { get; set; }
         public string UserInfoEndpoint { get; set; }
+        public string IntrospectEndpoint { get; set; }
 
         // Client credentials
         public string ClientId { get; set; }

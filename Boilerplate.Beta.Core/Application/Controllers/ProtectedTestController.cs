@@ -1,5 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Attributes;
-using Boilerplate.Beta.Core.Application.Services.Abstractions.Auth;
+﻿using Boilerplate.Beta.Core.Application.Services.Abstractions.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,14 +24,29 @@ namespace Boilerplate.Beta.Core.Application.Controllers
         }
 
         [Authorize]
+        [HttpGet("get-userinfo")]
+        public async Task<IActionResult> GetUserinfo()
+        {
+            var authHeader = HttpContext.Request.Headers["Authorization"].ToString();
+            var token = authHeader.Substring("Bearer ".Length).Trim();
+
+            var userInfoJson = await _identityClient.FetchUserInfoAsync(token);
+            if (userInfoJson == null)
+            {
+                return Unauthorized("Failed to fetch user info.");
+            }
+
+            return Ok(userInfoJson.RootElement.ToString());
+        }
+
+        [Authorize]
         [HttpGet("protected")]
         public IActionResult Protected()
         {
             return Ok($"Hello {User.Identity?.Name ?? "Unknown user"}");
         }
 
-        [Authorize]
-        [RequiresPostValidation]
+        [Authorize(Policy = "ActiveUser")]
         [HttpGet("protected-require-post-validation")]
         public IActionResult ProtectedRequirePostValidation()
         {

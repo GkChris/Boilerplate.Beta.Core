@@ -1,4 +1,6 @@
-﻿using Boilerplate.Beta.Core.Infrastructure.Configuration;
+﻿using Boilerplate.Beta.Core.Application.Handlers;
+using Boilerplate.Beta.Core.Infrastructure.Configuration;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -31,7 +33,14 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
                     };
                 });
 
-            services.AddAuthorization();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ActiveUser", policy =>
+                    policy.RequireAuthenticatedUser()
+                          .AddRequirements(new ActiveUserRequirement()));
+            });
+            services.AddSingleton<IAuthorizationHandler, ActiveUserHandler>();
+            services.AddHttpContextAccessor();
         }
     }
 }

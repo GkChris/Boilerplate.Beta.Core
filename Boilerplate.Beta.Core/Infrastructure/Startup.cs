@@ -52,7 +52,6 @@ namespace Boilerplate.Beta.Core.Infrastructure
 			app.UseMiddleware<CustomLoggingMiddleware>();
 
 			app.UseAuthentication();
-            app.UseMiddleware<PostValidationMiddleware>();
             app.UseAuthorization();
 
 			app.UseSignalREndpoints();
