@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Boilerplate.Beta.Core.Application.Services.Abstractions
+namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers.ProtectedTest.Services
 {
     public interface IIdentityService
     {

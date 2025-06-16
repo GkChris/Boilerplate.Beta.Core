@@ -1,10 +1,10 @@
-﻿using Boilerplate.Beta.Core.Application.Models.DTOs.Auth;
+﻿using Boilerplate.Beta.Core.Application.Controllers.TestControllers.ProtectedTest.DTOs;
+using Boilerplate.Beta.Core.Application.Controllers.TestControllers.ProtectedTest.Services;
 using Boilerplate.Beta.Core.Application.Services;
-using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
+namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers.ProtectedTestController
 {
     [ApiController]
     [Route("api/[controller]")]

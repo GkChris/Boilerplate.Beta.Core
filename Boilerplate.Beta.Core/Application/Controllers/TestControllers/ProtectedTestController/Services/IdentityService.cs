@@ -1,9 +1,8 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
-using Boilerplate.Beta.Core.Infrastructure.Configuration;
+﻿using Boilerplate.Beta.Core.Infrastructure.Configuration;
 using Microsoft.Extensions.Options;
 using System.Text.Json;
 
-namespace Boilerplate.Beta.Core.Application.Services
+namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers.ProtectedTest.Services
 {
     public class IdentityService : IIdentityService
     {

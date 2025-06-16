@@ -1,5 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Services;
-using Boilerplate.Beta.Core.Application.Services.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Controllers.TestControllers.ProtectedTest.Services;
 using Boilerplate.Beta.Core.Infrastructure.Auth;
 using Boilerplate.Beta.Core.Infrastructure.Auth.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Configuration;

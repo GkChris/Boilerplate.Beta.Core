@@ -1,4 +1,4 @@
-﻿namespace Boilerplate.Beta.Core.Application.Models.DTOs.Auth
+﻿namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers.ProtectedTest.DTOs
 {
     public class LoginRequest
     {
