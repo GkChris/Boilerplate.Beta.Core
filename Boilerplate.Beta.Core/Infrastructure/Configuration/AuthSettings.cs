@@ -8,6 +8,7 @@
         public string TokenEndpoint { get; set; }
         public string UserInfoEndpoint { get; set; }
         public string IntrospectEndpoint { get; set; }
+        public string LogoutEndpoint { get; set; }
 
         // Client credentials
         public string ClientId { get; set; }

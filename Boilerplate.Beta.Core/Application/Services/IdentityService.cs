@@ -33,9 +33,32 @@ namespace Boilerplate.Beta.Core.Application.Services
 
             var result = await response.Content.ReadAsStringAsync();
             using var json = JsonDocument.Parse(result);
+            return json.RootElement.GetProperty("access_token").GetString();
+        }
 
-            var accessToken = json.RootElement.GetProperty("access_token").GetString();
-            return accessToken;
+        public async Task<string?> LoginWithSocialAsync(string code, string redirectUri)
+        {
+            var content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("grant_type", "authorization_code"),
+                new KeyValuePair<string, string>("code", code),
+                new KeyValuePair<string, string>("redirect_uri", redirectUri),
+                new KeyValuePair<string, string>("client_id", _settings.ClientId),
+                new KeyValuePair<string, string>("client_secret", _settings.ClientSecret)
+            });
+
+            var response = await _httpClient.PostAsync(_settings.TokenEndpoint, content);
+            if (!response.IsSuccessStatusCode) return null;
+
+            var result = await response.Content.ReadAsStringAsync();
+            using var json = JsonDocument.Parse(result);
+            return json.RootElement.GetProperty("access_token").GetString();
+        }
+
+        public async Task<bool> LogoutAsync()
+        {
+            var response = await _httpClient.GetAsync(_settings.LogoutEndpoint);
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<JsonDocument?> FetchUserInfoAsync(string token)

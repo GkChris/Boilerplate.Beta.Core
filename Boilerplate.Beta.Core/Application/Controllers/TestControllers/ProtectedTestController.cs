@@ -1,4 +1,6 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Models.DTOs.Auth;
+using Boilerplate.Beta.Core.Application.Services;
+using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,12 +11,12 @@ namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
     public class ProtectedTestController : ControllerBase
     {
         private readonly IHttpClientFactory _httpClientFactory;
-        private readonly IIdentityService _identityClient;
+        private readonly IIdentityService _identityService;
 
-        public ProtectedTestController(IHttpClientFactory httpClientFactory, IIdentityService identityClient)
+        public ProtectedTestController(IHttpClientFactory httpClientFactory, IIdentityService identityService)
         {
             _httpClientFactory = httpClientFactory;
-            _identityClient = identityClient;
+            _identityService = identityService;
         }
 
         [HttpGet("public")]
@@ -30,7 +32,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
             var authHeader = HttpContext.Request.Headers["Authorization"].ToString();
             var token = authHeader.Substring("Bearer ".Length).Trim();
 
-            var userInfoJson = await _identityClient.FetchUserInfoAsync(token);
+            var userInfoJson = await _identityService.FetchUserInfoAsync(token);
             if (userInfoJson == null)
             {
                 return Unauthorized("Failed to fetch user info.");
@@ -60,7 +62,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var token = await _identityClient.LoginAsync(request.Username, request.Password);
+            var token = await _identityService.LoginAsync(request.Username, request.Password);
             if (token == null)
             {
                 return Unauthorized("Invalid credentials");
@@ -68,11 +70,25 @@ namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
 
             return Ok(new { access_token = token });
         }
-    }
 
-    public class LoginRequest
-    {
-        public string Username { get; set; } = "";
-        public string Password { get; set; } = "";
+
+        [HttpPost("social-login")]
+        public async Task<IActionResult> SocialLogin([FromBody] SocialLoginRequest request)
+        {
+            var token = await _identityService.LoginWithSocialAsync(request.Code, request.RedirectUri);
+            if (token == null) return Unauthorized("Invalid or expired auth code");
+
+            return Ok(new { access_token = token });
+        }
+
+        [Authorize]
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var success = await _identityService.LogoutAsync();
+            if (!success) return StatusCode(500, "Failed to logout");
+
+            return NoContent();
+        }
     }
 }
