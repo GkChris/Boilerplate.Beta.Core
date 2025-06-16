@@ -43,7 +43,7 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
             });
 
             services.AddScoped<IIdentityService, IdentityService>();
-            services.AddSingleton<IAuthorizationHandler, ActiveUserHandler>();
+            services.AddScoped<IAuthorizationHandler, ActiveUserHandler>();
             services.AddScoped<ITokenValidationService, TokenValidationService>();
         }
     }
