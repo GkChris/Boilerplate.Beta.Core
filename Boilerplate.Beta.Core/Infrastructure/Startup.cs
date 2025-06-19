@@ -30,6 +30,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
 			services.AddAuth(Configuration);
             services.AddHttpClients(Configuration);
             services.AddHttpContextAccessor();
+			services.AddConfiguredCors(Configuration);
         }
 
         // Configure the HTTP request pipeline here
@@ -46,10 +47,12 @@ namespace Boilerplate.Beta.Core.Infrastructure
 				app.UseHsts();
 			}
 
-			app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 			app.UseRouting();
 
-			app.UseMiddleware<ErrorHandlingMiddleware>();
+            app.UseCors("DefaultCorsPolicy");
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 			app.UseMiddleware<CustomLoggingMiddleware>();
 
 			app.UseAuthentication();
