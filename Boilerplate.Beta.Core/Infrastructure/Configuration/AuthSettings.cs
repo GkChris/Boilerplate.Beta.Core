@@ -3,8 +3,8 @@
     public class AuthSettings
     {
         // Core URLs
-        public string Authority { get; set; }              
-        public string Audience { get; set; }               
+        public string Authority { get; set; }
+        public string Audience { get; set; }
 
         // Client credentials
         public string ClientId { get; set; }
@@ -22,6 +22,10 @@
 
         // Additional 
         public string ClientName { get; set; }
+
+        // Conditions
+        public bool AcceptTokenFromCookie { get; set; }
+        public bool AcceptTokenFromHeader { get; set; }
 
         // Testing 
         public string TokenEndpoint { get; set; } //Testing
