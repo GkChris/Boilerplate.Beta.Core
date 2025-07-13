@@ -7,7 +7,7 @@
       "launchBrowser": true,
       "applicationUrl": "http://localhost:5101",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local",
+        "ASPNETCORE_ENVIRONMENT": "Development.Local",
         "ASPNETCORE_URLS": "http://localhost:5101",
         "ConnectionStrings__DefaultConnection": "Server=localhost;Port=5432;Database=your_database;User Id=user;Password=password;",
         "Kafka__BootstrapServers": "localhost:9093"
@@ -19,7 +19,7 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:5101",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local",
+        "ASPNETCORE_ENVIRONMENT": "Development.Local",
         "ASPNETCORE_URLS": "https://localhost:5101",
         "ConnectionStrings__DefaultConnection": "Server=localhost;Port=5432;Database=your_database;User Id=user;Password=password;",
         "Kafka__BootstrapServers": "localhost:9093"
