@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace Boilerplate.Beta.Core.Infrastructure
@@ -12,17 +13,25 @@ namespace Boilerplate.Beta.Core.Infrastructure
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppSettings()
+                .ConfigureAppConfiguration((hostingContext, config) =>
+                {
+                    var env = hostingContext.HostingEnvironment;
+
+                    config.Sources.Clear(); // Optional: clear default sources to control order
+
+                    config.AddJsonFile("Infrastructure/appsettings.json", optional: false, reloadOnChange: true)
+                          .AddJsonFile($"Infrastructure/appsettings.{env.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                          .AddEnvironmentVariables();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-					var builder = webBuilder.UseStartup<Startup>();
-					builder.UseUrls(GetAppUrl());
-				});
+                    webBuilder.UseStartup<Startup>();
 
-		private static string GetAppUrl()
-		{
-			var url = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
-			return url;
-		}
-	}
+                    var url = Environment.GetEnvironmentVariable("ASPNETCORE_URLS");
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        webBuilder.UseUrls(url);
+                    }
+                });
+    }
 }
