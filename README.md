@@ -4,7 +4,7 @@
 
 Boilerplate.Beta.Core is a modular and scalable backend boilerplate
 built with .NET. It supports `REST APIs`, `Kafka`, `WebSockets (SignalR)`, and
-integrates out of the box with `[FusionAuth](https://fusionauth.io)` for identity management.  
+integrates out of the box with [FusionAuth](https://fusionauth.io) for identity management.  
   
 Designed for fast onboarding and reliable local/Docker development, this
 boilerplate lays the foundation for clean architecture and
