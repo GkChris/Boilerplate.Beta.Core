@@ -3,8 +3,8 @@
 ## 1. Project Overview
 
 Boilerplate.Beta.Core is a modular and scalable backend boilerplate
-built with .NET. It supports REST APIs, Kafka, WebSockets (SignalR), and
-integrates out of the box with FusionAuth for identity management.  
+built with .NET. It supports `REST APIs`, `Kafka`, `WebSockets (SignalR)`, and
+integrates out of the box with `FusionAuth` for identity management.  
   
 Designed for fast onboarding and reliable local/Docker development, this
 boilerplate lays the foundation for clean architecture and
@@ -36,18 +36,19 @@ Studio or `dotnet run`. Uses `appsettings.Development.Local.json`.
 `appsettings.Development.Docker.json`. Environment values are
 overwritten by Docker Compose from the infrastructure repo.  
   
-**Production**: Configuration defined in `appsettings.json` or
-injected via environment variables.
+**Production**: Core runs inside a container and uses
+`appsettings.json`. Environment values are
+overwritten by Docker Compose from the infrastructure repo.
 
 ## 4. Installation & Usage
 
 1. Clone the repositories:
 
-> git clone https://github.com/yourusername/Boilerplate.Beta.Core.git  
+> git clone https://github.com/gkchris/Boilerplate.Beta.Core.git  
 > git clone
-> https://github.com/yourusername/Boilerplate.Beta.Frontend.git  
+> https://github.com/gkchris/Boilerplate.Beta.Frontend.git  
 > git clone
-> https://github.com/yourusername/Boilerplate.Beta.Infrastructure.git
+> https://github.com/gkchris/Boilerplate.Beta.Infrastructure.git
 
 2. Navigate to the infrastructure scripts:
 
@@ -70,19 +71,19 @@ The backend authorizes users based on this cookie and optionally
 supports tokens in headers, controlled by flags in
 `appsettings.json`.  
   
-Role-based authorization is supported. The relevant code resides in
+The relevant code resides in
 `Infrastructure/Extensions/AuthExtension.cs`.
 
 ## 6. Messaging (Kafka)
 
-Kafka is configured under `Infrastructure/Messaging`. The
+Kafka is configured under `Infrastructure/Messaging/Kafka`. The
 `KafkaPublisherService` in `Application/Services` handles message
 publishing, while the `KafkaMessageHandler` in
 `Application/Handlers` processes incoming events.
 
 ## 7. WebSockets (SignalR)
 
-SignalR is set up in `Infrastructure/Messaging`. Real-time events are
+SignalR is set up in `Infrastructure/Messaging/SignalR`. Real-time events are
 published using `SignalRPublisherService` in `Application/Services`,
 and handled using `SignalRMessageHandler` in `Application/Handlers`.
 
@@ -96,9 +97,9 @@ under `Application/Middlewares`.
 
 ## 9. Project Structure
 
-/Application - Use-case logic, service abstractions, DTOs, controllers  
-/Data - DB context, EF seeders  
-/Infrastructure - Configurations for Kafka, SignalR, FusionAuth,
+**/Application** - Use-case logic, service abstractions, DTOs, controllers  
+**/Data** - DB context, EF seeders  
+**/Infrastructure** - Configurations for Kafka, SignalR, FusionAuth,
 Swagger, CORS, service registration, etc.
 
 ## 10. Configuration
