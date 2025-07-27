@@ -36,7 +36,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
         // Configure the HTTP request pipeline here
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			if (env.IsDevelopment() || env.IsEnvironment("Local"))
+			if (env.IsEnvironment("Development.Local") || env.IsEnvironment("Development.Docker"))
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseSwaggerUIConfiguration();
