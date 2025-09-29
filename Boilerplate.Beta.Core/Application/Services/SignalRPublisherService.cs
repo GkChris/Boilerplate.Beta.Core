@@ -1,31 +1,30 @@
 ﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
-using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR;
-using Microsoft.AspNetCore.SignalR;
+using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR.Abstractions;
 using Microsoft.Extensions.Logging;
 
 namespace Boilerplate.Beta.Core.Application.Services
 {
-    public class SignalRPublisherService : ISignalRPublisherService
+	public class SignalRPublisherService : ISignalRPublisherService
     {
-        private readonly IHubContext<ChatHub> _hubContext;
+        private readonly ISignalRPublisher _signalRPublisher;
         private readonly ILogger<SignalRPublisherService> _logger;
 
-        public SignalRPublisherService(IHubContext<ChatHub> hubContext, ILogger<SignalRPublisherService> logger)
+        public SignalRPublisherService(ISignalRPublisher signalRPublisher, ILogger<SignalRPublisherService> logger)
         {
-            _hubContext = hubContext;
+            _signalRPublisher = signalRPublisher;
             _logger = logger;
         }
 
         public async Task SendMessageToAllAsync(string message)
         {
             _logger.LogInformation("Sending message to all clients: {Message}", message);
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", message);
+            await _signalRPublisher.SendMessageToAllClients(message);
         }
 
         public async Task SendMessageToClientAsync(string targetClientId, string message)
         {
             _logger.LogInformation("Sending message to client {TargetClientId}: {Message}", targetClientId, message);
-            await _hubContext.Clients.Client(targetClientId).SendAsync("ReceiveMessage", message);
+            await _signalRPublisher.SendMessageToClient(targetClientId, message);
         }
     }
 }

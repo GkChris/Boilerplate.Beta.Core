@@ -1,4 +1,5 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
+using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR;
 using Microsoft.Extensions.Logging;
 
 namespace Boilerplate.Beta.Core.Application.Handlers
