@@ -1,5 +1,4 @@
 ﻿using Boilerplate.Beta.Core.Application.Models.Entities;
-using Boilerplate.Beta.Core.Application.Repositories.Abstractions;
 using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +9,10 @@ namespace Boilerplate.Beta.Core.Application.Controllers
     public class EntityController : Controller
     {
         private readonly IEntityService _entityService;
-        private readonly IRepository<Entity> _entityRepository;
 
-        public EntityController(IEntityService entityService, IRepository<Entity> entityRepository)
+        public EntityController(IEntityService entityService)
         {
             _entityService = entityService;
-            _entityRepository = entityRepository;
         }
 
         [HttpGet("get/all")]
@@ -34,7 +31,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetEntity(Guid id)
         {
-            var entity = await _entityRepository.GetByIdAsync(id);
+            var entity = await _entityService.GetEntityByIdAsync(id);
 
             if (entity == null)
             {
@@ -52,7 +49,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
                 return BadRequest("Entity data is required.");
             }
 
-            var entity = await _entityRepository.AddAsync(payload);
+            var entity = await _entityService.CreateEntityAsync(payload);
 
             return Ok(entity);
         }

@@ -13,11 +13,19 @@ namespace Boilerplate.Beta.Core.Application.Services
 			_entityRepository = entityRepository;
 		}
 
-		public async Task<IEnumerable<Entity>> GetAllEntitiesAsync()
-		{
-			var entities = await _entityRepository.GetAllAsync();
+        public async Task<IEnumerable<Entity>> GetAllEntitiesAsync()
+        {
+            return await _entityRepository.GetAllAsync();
+        }
 
-			return entities;
-		}
-	}
+        public async Task<Entity?> GetEntityByIdAsync(Guid id)
+        {
+            return await _entityRepository.GetByIdAsync(id);
+        }
+
+        public async Task<Entity> CreateEntityAsync(Entity entity)
+        {
+            return await _entityRepository.AddAsync(entity);
+        }
+    }
 }
