@@ -2,9 +2,9 @@
 
 namespace Boilerplate.Beta.Core.Application.Exceptions
 {
-	public class AddCustomErrorException : CustomException
+	public class AddCustomException : CustomException
 	{
-		public AddCustomErrorException(string addMessage)
+		public AddCustomException(string addMessage)
 			: base($"'{addMessage}'.", "This will be a future custom error.", StatusCodes.Status500InternalServerError)
 		{
 		}

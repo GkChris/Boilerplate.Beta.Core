@@ -1,19 +1,26 @@
-﻿using System.Text.Json;
-using Boilerplate.Beta.Core.Application.Mappers;
+﻿using Boilerplate.Beta.Core.Application.Mappers;
+using Boilerplate.Beta.Core.Application.Models.DTOs;
+using Boilerplate.Beta.Core.Application.Shared.Constants;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Boilerplate.Beta.Core.Application.Middlewares
 {
-	public class ErrorHandlingMiddleware
+    public class ErrorHandlingMiddleware
 	{
 		private readonly RequestDelegate _next;
 		private readonly ILogger<ErrorHandlingMiddleware> _logger;
+        private readonly IWebHostEnvironment _env;
 
-		public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
+        public ErrorHandlingMiddleware(RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger, IWebHostEnvironment env)
 		{
 			_next = next;
 			_logger = logger;
+			_env = env;
 		}
 
 		public async Task InvokeAsync(HttpContext context)
@@ -29,17 +36,34 @@ namespace Boilerplate.Beta.Core.Application.Middlewares
 				context.Response.StatusCode = statusCode;
 				context.Response.ContentType = "application/json";
 
-				var response = new
+				var isDevelopment = _env.IsEnvironment(EnvInternalNames.LocalDevelopment) || _env.IsEnvironment(EnvInternalNames.DockerDevelopment);
+
+                var response = new ApiErrorResponse
 				{
-					error = new
+					Error = new ApiErrorDetail
 					{
-						type = typeName,
-						message = friendlyMessage
+						Type = typeName,
+						Message = friendlyMessage,
+						StackTrace = isDevelopment
+                            ? ex.StackTrace?.ToString() 
+							: null,
+						InnerException = isDevelopment
+							? ex.InnerException?.Message?.ToString()
+							: null
 					}
 				};
 
-				await context.Response.WriteAsync(JsonSerializer.Serialize(response));
-			}
-		}
+                var options = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                    WriteIndented = isDevelopment
+                };
+
+				var json = JsonSerializer.Serialize(response, options);
+
+				await context.Response.WriteAsync(json);
+            }
+        }
 	}
 }

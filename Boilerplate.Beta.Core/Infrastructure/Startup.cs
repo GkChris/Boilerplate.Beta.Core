@@ -1,4 +1,5 @@
 ﻿using Boilerplate.Beta.Core.Application.Middlewares;
+using Boilerplate.Beta.Core.Application.Shared.Constants;
 using Boilerplate.Beta.Core.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -36,7 +37,8 @@ namespace Boilerplate.Beta.Core.Infrastructure
         // Configure the HTTP request pipeline here
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
-			if (env.IsEnvironment("Development.Local") || env.IsEnvironment("Development.Docker"))
+            var isDevelopment = env.IsEnvironment(EnvInternalNames.LocalDevelopment) || env.IsEnvironment(EnvInternalNames.DockerDevelopment);
+            if (isDevelopment)
 			{
 				app.UseDeveloperExceptionPage();
 				app.UseSwaggerUIConfiguration();

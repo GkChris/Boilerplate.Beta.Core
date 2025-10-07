@@ -5,16 +5,10 @@ namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ApiTestController : Controller
+    public class ApiErrorTestController : Controller
     {
-        public ApiTestController()
+        public ApiErrorTestController()
         {
-        }
-
-        [HttpGet("test-success")]
-        public async Task<IActionResult> TestSuccess()
-        {
-            return Ok();
         }
 
         [HttpGet("test-404")]
@@ -23,22 +17,22 @@ namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
             return NotFound();
         }
 
-        [HttpGet("test-error")]
+        [HttpGet("test-non-implemented-exception")]
         public async Task<IActionResult> TestError()
         {
             throw new NotImplementedException();
         }
 
-        [HttpGet("test-custom-404")]
+        [HttpGet("test-custom-resource-not-found-exception")]
         public async Task<IActionResult> TestCustom404()
         {
             throw new ResourceNotFoundException("Test warning message for developers");
         }
 
-        [HttpGet("test-custom-error")]
+        [HttpGet("test-custom-add-custom-exception")]
         public async Task<IActionResult> TestCustomError()
         {
-            throw new AddCustomErrorException("Test error message for developers");
+            throw new AddCustomException("Test error message for developers");
         }
     }
 }
