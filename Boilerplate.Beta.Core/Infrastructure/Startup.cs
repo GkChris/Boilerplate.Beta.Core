@@ -24,7 +24,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddInfrastructureConfiguration(Configuration);
             services.AddDatabaseServices(Configuration);
             services.AddApiControllers();
-            services.AddApplicationServices();
+            services.AddCoreDependencies();
             services.AddSwaggerConfiguration();
 			services.AddSignalRBus();
 			services.AddKafkaBus(Configuration);

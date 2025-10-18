@@ -1,22 +1,21 @@
-﻿using Boilerplate.Beta.Core.Application.Models.Entities;
+﻿using Boilerplate.Beta.Core.Application.Repositories;
 using Boilerplate.Beta.Core.Application.Repositories.Abstractions;
 using Boilerplate.Beta.Core.Application.Services;
 using Boilerplate.Beta.Core.Application.Services.Abstractions;
-using Boilerplate.Beta.Core.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 {
-    public static class ApplicationServicesExtension
+    public static class CoreDependenciesExtension
     {
-        public static void AddApplicationServices(this IServiceCollection services)
+        public static void AddCoreDependencies(this IServiceCollection services)
         {
             // Services
             services.AddScoped<IEntityService, EntityService>();
 
             // Repositories
-            services.AddScoped<IRepository<Entity>, EntityRepository>();
-            
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IEntityRepository, EntityRepository>();
         }
     }
 }
