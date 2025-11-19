@@ -38,6 +38,7 @@
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="8.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="8.0.0" />
+		<PackageReference Include="System.Threading.RateLimiting" Version="8.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

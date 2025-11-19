@@ -21,8 +21,8 @@ Migrations are expected to be placed under `Data/Migrations`, which is
 excluded from source control via `.gitignore`. Developers must perform
 an initial migration.  
 - **Infrastructure**: Contains integrations with external systems
-such as Kafka, SignalR, FusionAuth, Swagger, and CORS, as well as
-DI/service registration.  
+such as Kafka, SignalR, FusionAuth, Swagger, CORS, and rate limiting,
+as well as DI/service registration.  
   
 The architecture is designed for testability, extensibility, and clear
 separation of concerns.
@@ -87,7 +87,17 @@ SignalR is set up in `Infrastructure/Messaging/SignalR`. Real-time events are
 published using `SignalRPublisherService` in `Application/Services`,
 and handled using `SignalRMessageHandler` in `Application/Handlers`.
 
-## 8. Error Handling & Logging
+## 8. Rate Limiting & Timeout Protection
+
+Rate limiting is configured under `Infrastructure/Extensions/RateLimitingExtension.cs` with three policies:
+
+- **Lenient** (500 req/min prod, 50 dev) - Public endpoints, applied by default
+- **Default** (100 req/min prod, 10 dev) - Standard CRUD operations
+- **Strict** (30 req/min prod, 5 dev) - Critical endpoints (login, payments)
+
+Apply policies per endpoint using `[EnableRateLimiting("policy")]` attribute. All limits are configured in `appsettings.json` and can be adjusted without code changes. The API also enforces a 30-second request timeout to protect against long-running operations.
+
+## 9. Error Handling & Logging
 
 Custom logger and a global error handler are integrated to provide
 consistent logging and exception responses across the API.  
@@ -95,14 +105,14 @@ consistent logging and exception responses across the API.
 Custom logging and error handling middleware implementations are located
 under `Application/Middlewares`.
 
-## 9. Project Structure
+## 10. Project Structure
 
 **/Application** - Use-case logic, service abstractions, DTOs, controllers  
 **/Data** - DB context, EF seeders  
 **/Infrastructure** - Configurations for Kafka, SignalR, FusionAuth,
-Swagger, CORS, service registration, etc.
+Swagger, CORS, rate limiting, and service registration.
 
-## 10. Configuration
+## 11. Configuration
 
 Configuration files include:  
 - appsettings.json  
@@ -117,7 +127,7 @@ is set to `true` in `appsettings.json`, migrations will be applied
 automatically at runtime. Otherwise, run `dotnet ef database update`
 manually.
 
-## 11. Extending the Boilerplate
+## 12. Extending the Boilerplate
 
 To add functionality:  
 - Define new endpoints in the appropriate controller.  
@@ -126,18 +136,23 @@ To add functionality:
 - Handle events using `KafkaMessageHandler` or
 `SignalRMessageHandler`.  
 - Register new services or repositories in
-`Infrastructure/Extensions/ApplicationServiceExtensions.cs`.
+`Infrastructure/Extensions/CoreDependenciesExtension.cs`.
+- Apply rate limiting policies per endpoint using `[EnableRateLimiting("policy")]`.
 
-## 12. Common Pitfalls
+## 13. Common Pitfalls
 
 Coming soon
 
-## 13. Testing
+## 14. Testing
 
-No tests are currently implemented under
-`Boilerplate.Beta.Core.Tests`. Testing strategy is left to the
-developer.
+Test endpoints are available under `Application/Controllers/TestControllers`:
+- `RateLimitingTestController` provides endpoints to test rate limiting and timeout functionality
+- `ApiErrorTestController` for error handling scenarios
+- `ProtectedTestController` for authentication/authorization testing
 
-## 14. License
+No unit tests are currently implemented under `Boilerplate.Beta.Core.Tests`.
+Testing strategy is left to the developer.
+
+## 15. License
 
 Boilerplate.Beta.Core is licensed under the MIT License. See [LICENSE](https://github.com/GkChris/Boilerplate.Beta.Core?tab=MIT-1-ov-file) for more details.

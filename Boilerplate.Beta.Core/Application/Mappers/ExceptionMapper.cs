@@ -94,6 +94,14 @@ namespace Boilerplate.Beta.Core.Application.Mappers
 					nameof(SecurityException)
 				),
 
+				// NETWORK & HTTP ERRORS
+				HttpRequestException e => (
+					StatusCodes.Status503ServiceUnavailable,
+					e.Message,
+					"The requested service is currently unavailable.",
+					nameof(HttpRequestException)
+				),
+
 				// NOT IMPLEMENTED / SERVER LIMITS
 				NotImplementedException e => (
 					StatusCodes.Status501NotImplemented,

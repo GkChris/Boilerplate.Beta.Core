@@ -32,6 +32,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddHttpClients(Configuration);
             services.AddHttpContextAccessor();
 			services.AddConfiguredCors(Configuration);
+			services.AddRateLimiting(Configuration);
         }
 
         // Configure the HTTP request pipeline here
@@ -54,6 +55,15 @@ namespace Boilerplate.Beta.Core.Infrastructure
 
             app.UseCors("DefaultCorsPolicy");
 
+            var infraOptions = app.ApplicationServices.GetRequiredService<IOptions<InfrastructureSettings>>();
+            
+            if (infraOptions.Value.EnableRateLimiting)
+            {
+                app.UseRateLimitingMiddleware();
+            }
+
+            app.UseTimeoutMiddleware(infraOptions.Value.RequestTimeoutSeconds);
+
             app.UseMiddleware<ErrorHandlingMiddleware>();
 			app.UseMiddleware<CustomLoggingMiddleware>();
 
@@ -67,7 +77,6 @@ namespace Boilerplate.Beta.Core.Infrastructure
 				endpoints.MapControllers();
 			});
 
-            var infraOptions = app.ApplicationServices.GetRequiredService<IOptions<InfrastructureSettings>>();
             if (infraOptions.Value.AutoApplyMigrations)
 			{
 				app.ApplicationServices.UseAutoMigrations();

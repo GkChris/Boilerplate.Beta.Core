@@ -6,7 +6,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EntityController : Controller
+    public class EntityController : ControllerBase
     {
         private readonly IEntityService _entityService;
 
@@ -44,13 +44,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateEntity([FromBody] Entity payload)
         {
-            if (payload == null)
-            {
-                return BadRequest("Entity data is required.");
-            }
-
             var entity = await _entityService.CreateEntityAsync(payload);
-
             return Ok(entity);
         }
     }
