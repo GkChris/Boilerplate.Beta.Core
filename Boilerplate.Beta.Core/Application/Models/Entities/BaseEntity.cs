@@ -6,7 +6,7 @@ namespace Boilerplate.Beta.Core.Application.Models.Entities
     {
         [Key]
         public Guid Id { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
     }
 }
