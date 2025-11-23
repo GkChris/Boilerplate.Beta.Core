@@ -4,28 +4,17 @@ using Boilerplate.Beta.Core.Application.Services.Abstractions;
 
 namespace Boilerplate.Beta.Core.Application.Services
 {
-    public class EntityService : IEntityService
-	{
-		private readonly IRepository<Entity> _entityRepository;
+    /// <summary>
+    /// Entity service implementation
+    /// Extends base service and adds entity-specific business logic
+    /// </summary>
+    public class EntityService : Service<Entity>, IEntityService
+    {
+        private readonly IEntityRepository _entityRepository;
 
-		public EntityService(IRepository<Entity> entityRepository)
-		{
-			_entityRepository = entityRepository;
-		}
-
-        public async Task<IEnumerable<Entity>> GetAllEntitiesAsync()
+        public EntityService(IEntityRepository entityRepository) : base(entityRepository)
         {
-            return await _entityRepository.GetAllAsync();
-        }
-
-        public async Task<Entity?> GetEntityByIdAsync(Guid id)
-        {
-            return await _entityRepository.GetByIdAsync(id);
-        }
-
-        public async Task<Entity> CreateEntityAsync(Entity entity)
-        {
-            return await _entityRepository.AddAsync(entity);
+            _entityRepository = entityRepository;
         }
     }
 }

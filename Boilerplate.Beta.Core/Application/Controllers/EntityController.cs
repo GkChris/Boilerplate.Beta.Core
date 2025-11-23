@@ -18,9 +18,9 @@ namespace Boilerplate.Beta.Core.Application.Controllers
         [HttpGet("get/all")]
         public async Task<IActionResult> GetAllEntities()
         {
-            var entities = await _entityService.GetAllEntitiesAsync();
+            var entities = await _entityService.GetAllAsync();
 
-            if (entities == null)
+            if (entities == null || !entities.Any())
             {
                 return NotFound("No entities found.");
             }
@@ -31,7 +31,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
         [HttpGet("get/{id}")]
         public async Task<IActionResult> GetEntity(Guid id)
         {
-            var entity = await _entityService.GetEntityByIdAsync(id);
+            var entity = await _entityService.GetByIdAsync(id);
 
             if (entity == null)
             {
@@ -44,8 +44,34 @@ namespace Boilerplate.Beta.Core.Application.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateEntity([FromBody] Entity payload)
         {
-            var entity = await _entityService.CreateEntityAsync(payload);
+            var entity = await _entityService.AddAsync(payload);
             return Ok(entity);
+        }
+
+        [HttpPut("update/{id}")]
+        public async Task<IActionResult> UpdateEntity(Guid id, [FromBody] Entity payload)
+        {
+            var existingEntity = await _entityService.GetByIdAsync(id);
+            if (existingEntity == null)
+            {
+                return NotFound("Entity not found.");
+            }
+
+            var entity = await _entityService.UpdateAsync(payload);
+            return Ok(entity);
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<IActionResult> DeleteEntity(Guid id)
+        {
+            var existingEntity = await _entityService.GetByIdAsync(id);
+            if (existingEntity == null)
+            {
+                return NotFound("Entity not found.");
+            }
+
+            await _entityService.DeleteAsync(id);
+            return NoContent();
         }
     }
 }
