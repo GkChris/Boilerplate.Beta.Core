@@ -25,7 +25,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
             services.AddDatabaseServices(Configuration);
             services.AddApiControllers();
             services.AddCoreDependencies();
-            services.AddSwaggerConfiguration();
+            services.AddSwaggerConfiguration(Configuration);
 			services.AddSignalRBus();
 			services.AddKafkaBus(Configuration);
 			services.AddAuth(Configuration);
@@ -42,7 +42,7 @@ namespace Boilerplate.Beta.Core.Infrastructure
             if (isDevelopment)
 			{
 				app.UseDeveloperExceptionPage();
-				app.UseSwaggerUIConfiguration();
+				app.UseSwaggerUIConfiguration(Configuration);
 			}
 			else
 			{

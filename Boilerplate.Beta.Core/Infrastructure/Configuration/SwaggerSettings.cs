@@ -1,17 +1,17 @@
 ﻿namespace Boilerplate.Beta.Core.Infrastructure
 {
-    public class SwaggerSettings
+    public sealed class SwaggerSettings
     {
-        public string Title { get; set; }
-        public string Version { get; set; }
-        public string Description { get; set; }
-        public ContactSettings Contact { get; set; }
+        public required string Title { get; init; }
+        public required string Version { get; init; }
+        public string? Description { get; init; }
+        public ContactSettings? Contact { get; init; }
     }
 
-    public class ContactSettings
+    public sealed class ContactSettings
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Url { get; set; }
+        public string? Name { get; init; }
+        public string? Email { get; init; }
+        public Uri? Url { get; init; }
     }
 }
