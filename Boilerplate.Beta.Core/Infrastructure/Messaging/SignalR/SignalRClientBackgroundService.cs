@@ -9,13 +9,13 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR
     public class SignalRClientBackgroundService : BackgroundService
 	{
 		private readonly ILogger<SignalRClientBackgroundService> _logger;
-		private readonly ISignalRMessageHandler _messageHandler;
+		private readonly ISignalRMessageConsumer _messageHandler;
 		private readonly AppSettings _appSettings;
 		private HubConnection _connection;
 
 		public SignalRClientBackgroundService(
 			ILogger<SignalRClientBackgroundService> logger,
-			ISignalRMessageHandler messageHandler,
+			ISignalRMessageConsumer messageHandler,
 			IOptions<AppSettings> options) 
 		{
 			_logger = logger;

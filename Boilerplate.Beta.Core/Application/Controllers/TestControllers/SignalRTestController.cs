@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
@@ -7,9 +7,9 @@ namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
     [ApiController]
     public class SignalRTestController : ControllerBase
     {
-        private readonly ISignalRPublisherService _signalRPublisherService;
+        private readonly ISignalRMessagePublisher _signalRPublisherService;
 
-        public SignalRTestController(ISignalRPublisherService signalRPublisherService)
+        public SignalRTestController(ISignalRMessagePublisher signalRPublisherService)
         {
             _signalRPublisherService = signalRPublisherService;
         }

@@ -1,6 +1,6 @@
 ﻿namespace Boilerplate.Beta.Core.Application.Handlers.Abstractions
 {
-    public interface ISignalRMessageHandler
+    public interface ISignalRMessageConsumer
     {
         Task HandleMessageAsync(string message);
 

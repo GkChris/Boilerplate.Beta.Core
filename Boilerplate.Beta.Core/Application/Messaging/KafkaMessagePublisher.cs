@@ -1,17 +1,17 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using static Boilerplate.Beta.Core.Application.Shared.Constants.ColorConstants;
 
-namespace Boilerplate.Beta.Core.Application.Services
+namespace Boilerplate.Beta.Core.Application.Handlers
 {
-    public class KafkaPublisherService : IKafkaPublisherService
+    public class KafkaMessagePublisher : IKafkaMessagePublisher
     {
         private readonly IKafkaProducer _kafkaProducer;
-        private readonly ILogger<KafkaPublisherService> _logger;
+        private readonly ILogger<KafkaMessagePublisher> _logger;
 
-        public KafkaPublisherService(IKafkaProducer kafkaProducer, ILogger<KafkaPublisherService> logger)
+        public KafkaMessagePublisher(IKafkaProducer kafkaProducer, ILogger<KafkaMessagePublisher> logger)
         {
             _kafkaProducer = kafkaProducer;
             _logger = logger;

@@ -1,4 +1,4 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
@@ -7,9 +7,9 @@ namespace Boilerplate.Beta.Core.Application.Controllers.TestControllers
     [ApiController]
     public class KafkaTestController : ControllerBase
     {
-        private readonly IKafkaPublisherService _kafkaPublisherService;
+        private readonly IKafkaMessagePublisher _kafkaPublisherService;
 
-        public KafkaTestController(IKafkaPublisherService kafkaPublisherService)
+        public KafkaTestController(IKafkaMessagePublisher kafkaPublisherService)
         {
             _kafkaPublisherService = kafkaPublisherService;
         }

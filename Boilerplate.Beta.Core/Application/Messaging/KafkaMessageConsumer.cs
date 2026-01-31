@@ -4,11 +4,11 @@ using static Boilerplate.Beta.Core.Application.Shared.Constants.ColorConstants;
 
 namespace Boilerplate.Beta.Core.Application.Handlers
 {
-    public class KafkaMessageHandlers : IKafkaMessageHandler
+    public class KafkaMessageConsumer : IKafkaMessageConsumer
     {
-        private readonly ILogger<KafkaMessageHandlers> _logger;
+        private readonly ILogger<KafkaMessageConsumer> _logger;
 
-        public KafkaMessageHandlers(ILogger<KafkaMessageHandlers> logger)
+        public KafkaMessageConsumer(ILogger<KafkaMessageConsumer> logger)
         {
             _logger = logger;
         }

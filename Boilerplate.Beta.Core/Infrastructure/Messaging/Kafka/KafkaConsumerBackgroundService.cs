@@ -42,7 +42,7 @@ namespace Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka
         {
             using (var scope = _scopeFactory.CreateScope())
             {
-                var messageHandlers = scope.ServiceProvider.GetRequiredService<KafkaMessageHandlers>();
+                var messageHandlers = scope.ServiceProvider.GetRequiredService<KafkaMessageConsumer>();
                 await messageHandlers.HandleGenericMessage(topic, message);
             }
         }

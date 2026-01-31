@@ -1,6 +1,6 @@
-﻿namespace Boilerplate.Beta.Core.Application.Services.Abstractions
+﻿namespace Boilerplate.Beta.Core.Application.Handlers.Abstractions
 {
-    public interface ISignalRPublisherService
+    public interface ISignalRMessagePublisher
     {
         Task SendMessageToAllAsync(string message);
         Task SendMessageToClientAsync(string targetClientId, string message);

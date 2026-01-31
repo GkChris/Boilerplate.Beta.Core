@@ -1,15 +1,15 @@
-﻿using Boilerplate.Beta.Core.Application.Services.Abstractions;
+﻿using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR.Abstractions;
 using Microsoft.Extensions.Logging;
 
-namespace Boilerplate.Beta.Core.Application.Services
+namespace Boilerplate.Beta.Core.Application.Handlers
 {
-	public class SignalRPublisherService : ISignalRPublisherService
+	public class SignalRMessagePublisher : ISignalRMessagePublisher
     {
         private readonly ISignalRPublisher _signalRPublisher;
-        private readonly ILogger<SignalRPublisherService> _logger;
+        private readonly ILogger<SignalRMessagePublisher> _logger;
 
-        public SignalRPublisherService(ISignalRPublisher signalRPublisher, ILogger<SignalRPublisherService> logger)
+        public SignalRMessagePublisher(ISignalRPublisher signalRPublisher, ILogger<SignalRMessagePublisher> logger)
         {
             _signalRPublisher = signalRPublisher;
             _logger = logger;

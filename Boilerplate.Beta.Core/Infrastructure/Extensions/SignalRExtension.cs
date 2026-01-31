@@ -1,7 +1,5 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers;
 using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
-using Boilerplate.Beta.Core.Application.Services;
-using Boilerplate.Beta.Core.Application.Services.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.SignalR.Abstractions;
 using Microsoft.AspNetCore.Builder;
@@ -21,13 +19,13 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 		{
 			services.AddSignalR();
 			services.AddSingleton<ISignalRPublisher, SignalRPublisher>();
-			services.AddSingleton<ISignalRPublisherService, SignalRPublisherService>();
+			services.AddSingleton<ISignalRMessagePublisher, SignalRMessagePublisher>();
 		}
 
 		public static void AddSignalRConsumer(this IServiceCollection services)
 		{
 			services.AddSignalR();
-			services.AddSingleton<ISignalRMessageHandler, SignalRMessageHandler>();
+			services.AddSingleton<ISignalRMessageConsumer, SignalRMessageConsumer>();
 			services.AddHostedService<SignalRClientBackgroundService>();
 		}
 

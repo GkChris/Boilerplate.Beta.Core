@@ -1,6 +1,5 @@
 ﻿using Boilerplate.Beta.Core.Application.Handlers;
-using Boilerplate.Beta.Core.Application.Services;
-using Boilerplate.Beta.Core.Application.Services.Abstractions;
+using Boilerplate.Beta.Core.Application.Handlers.Abstractions;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka;
 using Boilerplate.Beta.Core.Infrastructure.Messaging.Kafka.Abstractions;
 using Microsoft.Extensions.Configuration;
@@ -27,13 +26,13 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
 				return new KafkaProducer(bootstrapServers, logger);
 			});
 
-			services.AddScoped<IKafkaPublisherService, KafkaPublisherService>();
+			services.AddScoped<IKafkaMessagePublisher, KafkaMessagePublisher>();
 		}
 
 		public static void AddKafkaConsumer(this IServiceCollection services, IConfiguration configuration)
 		{
 			services.AddSingleton<IKafkaConsumer, KafkaConsumer>();
-			services.AddScoped<KafkaMessageHandlers>();
+			services.AddScoped<KafkaMessageConsumer>();
 			services.AddHostedService<KafkaConsumerBackgroundService>();
 		}
 	}
