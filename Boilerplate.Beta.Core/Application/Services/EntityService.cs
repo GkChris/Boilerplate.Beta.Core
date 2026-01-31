@@ -6,34 +6,34 @@ namespace Boilerplate.Beta.Core.Application.Services
 {
     /// <summary>
     /// Entity service implementation
-    /// Uses IRepository-like abstraction (IEntityReadWriteRepository) and UnitOfWork for transactional consistency.
+    /// Uses IReadWriteRepository-like abstraction (IEntityReadWriteRepository) and UnitOfWork for transactional consistency.
     /// </summary>
     public class EntityService : IEntityService
     {
-        private readonly IEntityReadWriteRepository _entityRepository;
+        private readonly IEntityReadWriteRepository _entityReadWriteRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public EntityService(IEntityReadWriteRepository entityRepository, IUnitOfWork unitOfWork)
+        public EntityService(IEntityReadWriteRepository entityReadWriteRepository, IUnitOfWork unitOfWork)
         {
-            _entityRepository = entityRepository;
+            _entityReadWriteRepository = entityReadWriteRepository;
             _unitOfWork = unitOfWork;
         }
 
         public async Task<Entity?> GetByIdAsync(Guid id)
         {
-            return await _entityRepository.GetByIdAsync(id);
+            return await _entityReadWriteRepository.GetByIdAsync(id);
         }
 
         public async Task<IEnumerable<Entity>> GetAllAsync()
         {
-            return await _entityRepository.GetAllAsync();
+            return await _entityReadWriteRepository.GetAllAsync();
         }
 
         public async Task<Entity> AddAsync(Entity entity)
         {
             await _unitOfWork.ExecuteInTransactionAsync(async () =>
             {
-                await _entityRepository.AddAsync(entity);
+                await _entityReadWriteRepository.AddAsync(entity);
             });
 
             return entity;
@@ -43,7 +43,7 @@ namespace Boilerplate.Beta.Core.Application.Services
         {
             await _unitOfWork.ExecuteInTransactionAsync(async () =>
             {
-                await _entityRepository.UpdateAsync(entity);
+                await _entityReadWriteRepository.UpdateAsync(entity);
             });
 
             return entity;
@@ -53,7 +53,7 @@ namespace Boilerplate.Beta.Core.Application.Services
         {
             await _unitOfWork.ExecuteInTransactionAsync(async () =>
             {
-                await _entityRepository.DeleteAsync(id);
+                await _entityReadWriteRepository.DeleteAsync(id);
             });
         }
     }
