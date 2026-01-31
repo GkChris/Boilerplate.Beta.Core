@@ -1,26 +1,25 @@
-﻿using Boilerplate.Beta.Core.Application.Repositories.Abstractions;
+using Boilerplate.Beta.Core.Application.Repositories.Abstractions;
 using Boilerplate.Beta.Core.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Boilerplate.Beta.Core.Application.Repositories
 {
     /// <summary>
-    /// Base repository WITHOUT auto-commit.
+    /// Base read/write repository WITHOUT auto-commit.
     /// Use with UnitOfWork for transactional operations, or call SaveChangesAsync manually.
-    /// This is the ONLY repository base class - ensures consistent transaction behavior.
     /// </summary>
-    public class Repository<T> : IRepository<T> where T : class
+    public class ReadWriteRepository<T> : IReadWriteRepository<T> where T : class
     {
         protected readonly ApplicationDbContext _context;
         protected readonly DbSet<T> _dbSet;
 
-        public Repository(ApplicationDbContext context)
+        public ReadWriteRepository(ApplicationDbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
         }
 
-        public virtual async Task<T> GetByIdAsync(Guid id)
+        public virtual async Task<T?> GetByIdAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
         }
@@ -36,10 +35,10 @@ namespace Boilerplate.Beta.Core.Application.Repositories
             return entity;
         }
 
-        public virtual async Task<T> UpdateAsync(T entity)
+        public virtual Task<T> UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
-            return entity;
+            return Task.FromResult(entity);
         }
 
         public virtual async Task DeleteAsync(Guid id)

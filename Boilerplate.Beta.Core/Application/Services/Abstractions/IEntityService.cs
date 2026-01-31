@@ -4,11 +4,13 @@ namespace Boilerplate.Beta.Core.Application.Services.Abstractions
 {
     /// <summary>
     /// Entity-specific service interface
-    /// Extends base service with entity-specific operations
     /// </summary>
-    public interface IEntityService : IService<Entity>
+    public interface IEntityService
     {
-        // Add entity-specific methods here if needed
-        // e.g. Task<IEnumerable<Entity>> GetByStatusAsync(string status);
+        Task<Entity?> GetByIdAsync(Guid id);
+        Task<IEnumerable<Entity>> GetAllAsync();
+        Task<Entity> AddAsync(Entity entity);
+        Task<Entity> UpdateAsync(Entity entity);
+        Task DeleteAsync(Guid id);
     }
 }

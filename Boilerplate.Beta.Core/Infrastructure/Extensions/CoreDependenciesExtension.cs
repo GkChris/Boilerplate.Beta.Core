@@ -10,17 +10,15 @@ namespace Boilerplate.Beta.Core.Infrastructure.Extensions
     {
         public static void AddCoreDependencies(this IServiceCollection services)
         {
-            // Generic Services (base)
-            services.AddScoped(typeof(IService<>), typeof(Service<>));
-
-            // Specific Services
+            // Application Services
             services.AddScoped<IEntityService, EntityService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            // Generic Repositories (base)
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            // Repositories (base)
+            services.AddScoped(typeof(IReadWriteRepository<>), typeof(ReadWriteRepository<>));
             
-            // Specific Repositories
-            services.AddScoped<IEntityRepository, EntityRepository>();
+            // Application Repositories
+            services.AddScoped<IEntityReadWriteRepository, EntityReadWriteRepository>();
         }
     }
 }
