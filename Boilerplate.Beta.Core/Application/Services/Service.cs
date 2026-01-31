@@ -11,10 +11,12 @@ namespace Boilerplate.Beta.Core.Application.Services
     public class Service<T> : IService<T> where T : class
     {
         protected readonly IRepository<T> _repository;
+        protected readonly IUnitOfWork _unitOfWork;
 
-        public Service(IRepository<T> repository)
+        public Service(IRepository<T> repository, IUnitOfWork unitOfWork)
         {
             _repository = repository;
+            _unitOfWork = unitOfWork;
         }
 
         public virtual async Task<T?> GetByIdAsync(Guid id)
@@ -29,17 +31,30 @@ namespace Boilerplate.Beta.Core.Application.Services
 
         public virtual async Task<T> AddAsync(T entity)
         {
-            return await _repository.AddAsync(entity);
+            T result = null;
+            await _unitOfWork.ExecuteInTransactionAsync(async () =>
+            {
+                result = await _repository.AddAsync(entity);
+            });
+            return result;
         }
 
         public virtual async Task<T> UpdateAsync(T entity)
         {
-            return await _repository.UpdateAsync(entity);
+            T result = null;
+            await _unitOfWork.ExecuteInTransactionAsync(async () =>
+            {
+                result = await _repository.UpdateAsync(entity);
+            });
+            return result;
         }
 
         public virtual async Task DeleteAsync(Guid id)
         {
-            await _repository.DeleteAsync(id);
+            await _unitOfWork.ExecuteInTransactionAsync(async () =>
+            {
+                await _repository.DeleteAsync(id);
+            });
         }
     }
 }

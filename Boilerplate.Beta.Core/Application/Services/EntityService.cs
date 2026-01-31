@@ -12,7 +12,7 @@ namespace Boilerplate.Beta.Core.Application.Services
     {
         private readonly IEntityRepository _entityRepository;
 
-        public EntityService(IEntityRepository entityRepository) : base(entityRepository)
+        public EntityService(IEntityRepository entityRepository, IUnitOfWork unitOfWork) : base(entityRepository, unitOfWork)
         {
             _entityRepository = entityRepository;
         }

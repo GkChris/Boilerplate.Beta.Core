@@ -4,6 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Boilerplate.Beta.Core.Application.Repositories
 {
+    /// <summary>
+    /// Base repository WITHOUT auto-commit.
+    /// Use with UnitOfWork for transactional operations, or call SaveChangesAsync manually.
+    /// This is the ONLY repository base class - ensures consistent transaction behavior.
+    /// </summary>
     public class Repository<T> : IRepository<T> where T : class
     {
         protected readonly ApplicationDbContext _context;
@@ -28,14 +33,12 @@ namespace Boilerplate.Beta.Core.Application.Repositories
         public virtual async Task<T> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
             return entity;
         }
 
         public virtual async Task<T> UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
             return entity;
         }
 
@@ -45,7 +48,6 @@ namespace Boilerplate.Beta.Core.Application.Repositories
             if (entity != null)
             {
                 _dbSet.Remove(entity);
-                await _context.SaveChangesAsync();
             }
         }
     }
