@@ -38,18 +38,16 @@ namespace Boilerplate.Beta.Core.Application.Middlewares
 
 				var isDevelopment = _env.IsEnvironment(EnvInternalNames.LocalDevelopment) || _env.IsEnvironment(EnvInternalNames.DockerDevelopment);
 
+                // Use the thrown exception message (or mapped message) as primary. Keep friendlyMessage as additional context.
                 var response = new ApiErrorResponse
 				{
 					Error = new ApiErrorDetail
 					{
 						Type = typeName,
-						Message = friendlyMessage,
-						StackTrace = isDevelopment
-                            ? ex.StackTrace?.ToString() 
-							: null,
-						InnerException = isDevelopment
-							? ex.InnerException?.Message?.ToString()
-							: null
+						Message = string.IsNullOrWhiteSpace(message) ? friendlyMessage : message,
+                        FriendlyMessage = friendlyMessage,
+						StackTrace = isDevelopment ? ex.StackTrace : null,
+						InnerException = isDevelopment ? ex.InnerException?.Message : null
 					}
 				};
 

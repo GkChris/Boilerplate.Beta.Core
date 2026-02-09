@@ -6,7 +6,7 @@ namespace Boilerplate.Beta.Core.Application.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EntityController : ControllerBase
+    public class EntityController : ApiControllerBase
     {
         private readonly IEntityService _entityService;
 
